@@ -5,6 +5,8 @@ import connectDB from "../config/database";
 import auth from "./routes/api/auth";
 import user from "./routes/api/user";
 import profile from "./routes/api/profile";
+import todos from "./routes/api/todoRoute"
+
 
 const app = express();
 
@@ -19,13 +21,15 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // @route   GET /
 // @desc    Test Base API
 // @access  Public
+app.use("/auth", auth);
+app.use("/user", user);
+app.use("/profile", profile);
+app.use(todos)
+
+
 app.get("/", (_req, res) => {
   res.send("API Running");
 });
-
-app.use("/api/auth", auth);
-app.use("/api/user", user);
-app.use("/api/profile", profile);
 
 const port = app.get("port");
 const server = app.listen(port, () =>
@@ -33,3 +37,5 @@ const server = app.listen(port, () =>
 );
 
 export default server;
+
+
