@@ -13,8 +13,17 @@ router.get("/todos", async (req: Request, res: Response): Promise<void> => {
     }
 })
 
+router.get("/todo/:id", async (req: Request, res: Response): Promise<void> => {
+    try {
+        const todo: ITodo = await Todo.findOne()
+        res.status(200).json(todo)
+    } catch (error) {
+        console.log(error)
+    }
+})
 
-router.post("/add-todo", async (req: Request, res: Response): Promise<void> => {
+
+router.post("/todos", async (req: Request, res: Response): Promise<void> => {
     try {
         const body = req.body as Pick<ITodo, "title" | "description" | "year" | "isPublic" | "isCompleted">
 
@@ -30,14 +39,14 @@ router.post("/add-todo", async (req: Request, res: Response): Promise<void> => {
         const allTodos: ITodo[] = await Todo.find()
 
         res
-            .status(201)
+            .status(200)
             .json({ message: "Todo added", todo: newTodo, todos: allTodos })
     } catch (error) {
         console.log(error)
     }
 })
 
-router.put("/edit-todo/:id", async (req: Request, res: Response): Promise<void> => {
+router.put("/todos/:id", async (req: Request, res: Response): Promise<void> => {
     try {
         const {
             params: { id },
@@ -58,7 +67,7 @@ router.put("/edit-todo/:id", async (req: Request, res: Response): Promise<void> 
     }
 })
 
-router.delete("/delete-todo/:id", async (req: Request, res: Response): Promise<void> => {
+router.delete("/todos/:id", async (req: Request, res: Response): Promise<void> => {
     try {
         const deletedTodo: ITodo | null = await Todo.findByIdAndRemove(
             req.params.id

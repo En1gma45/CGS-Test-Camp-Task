@@ -1,13 +1,14 @@
 import bodyParser from "body-parser";
 import express from "express";
 
+
 import connectDB from "../config/database";
-import auth from "./routes/api/auth";
-import user from "./routes/api/user";
-import profile from "./routes/api/profile";
+import login from "./routes/api/userAuthorization";
+import register from "./routes/api/userRegister";
+import profile from "./routes/api/userProfile";
 import todos from "./routes/api/todoRoute"
 
-
+const cors = require("cors")
 const app = express();
 
 // Connect to MongoDB
@@ -18,13 +19,12 @@ app.set("port", process.env.PORT || 5000);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-// @route   GET /
-// @desc    Test Base API
-// @access  Public
-app.use("/auth", auth);
-app.use("/user", user);
-app.use("/profile", profile);
+app.use(cors())
+app.use("/api/login", login);
+app.use("/api/register", register);
+app.use("/api/profile", profile);
 app.use(todos)
+
 
 
 app.get("/", (_req, res) => {

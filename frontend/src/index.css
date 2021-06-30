@@ -11,3 +11,129 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.login_container,.register_container {
+  text-align: center;
+}
+
+
+.checkout-form-wrapper {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  padding: 20px;
+}
+
+.checkout-form {
+  border-radius: 10px;
+  background-color: white;
+  width: 500px;
+}
+
+.form-control {
+  width: 75%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: 3px solid #ccc;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+  outline: none;
+  resize: none;
+}
+
+.invalid-feedback {
+  font-size: 12px;
+  color: red;
+
+}
+
+.primary_button {
+  background-color: #555555;
+  border: 1px solid #555555;
+  color: white;
+  padding: 16px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  width: 75%;
+}
+
+.primary_button:hover {
+  background-color: white;
+  color: #555555;
+  border: 1px solid #555555;
+}
+
+.secondary_button {
+  color: blue;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.delete_icon,
+.edit_icon,
+.logout_icon {
+  cursor: pointer;
+  size: 30px;
+}
+
+.redirect_link {
+  text-decoration: none;
+}
+
+.todo_form {
+  display: flex;
+  margin: 0 auto;
+  max-width: 700px;
+  word-wrap: break-word;
+}
+
+.todo_form div p {
+  max-width: 600px;
+}
+
+
+.todo_form_buttons {
+  margin-top: 20px;
+  display: flex;
+  margin-left: auto;
+}
+
+
+
+.create_todo {
+  margin: 0 auto;
+  background-color: #555555;
+  border: 1px solid #555555;
+  color: white;
+  padding: 10px 25px;
+  text-align: center;
+  text-decoration: none;
+  display: flex;
+  font-size: 16px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+}
+
+.create_todo:hover {
+  background-color: white;
+  color: #555555;
+  border: 1px solid #555555;
+}
+
+.formik-errors {
+  color: red;
+}
+
+h1 {
+  text-align: center;
+}
+
+
+
+

@@ -1,5 +1,5 @@
 import { Document, Model, model, Schema } from "mongoose";
-import { IUser } from "./User";
+import { IUser } from "./UserModel";
 
 /**
  * Interface to model the Profile Schema for TypeScript.
