@@ -5,6 +5,7 @@ import connectDB from "../config/database";
 import auth from "./routes/api/auth";
 import user from "./routes/api/user";
 import profile from "./routes/api/profile";
+import todo from "./routes/api/todo"
 
 const app = express();
 
@@ -13,6 +14,7 @@ connectDB();
 
 // Express configuration
 app.set("port", process.env.PORT || 5000);
+console.log(process.env.PORT)
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
@@ -26,6 +28,7 @@ app.get("/", (_req, res) => {
 app.use("/api/auth", auth);
 app.use("/api/user", user);
 app.use("/api/profile", profile);
+app.use("/api/todo",todo)
 
 const port = app.get("port");
 const server = app.listen(port, () =>
