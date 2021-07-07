@@ -3,13 +3,18 @@
 > For This project use [MERN stask](https://www.mongodb.com/languages/mern-stack-tutorial)
 ## Required features
 
-- Authorization (login/signup);
-- Todo list with all CRUD operations;
-- Filters for todo list by title and statuses (private and completed);
-- Button pagination;
-- Backend should have stored in `server` dir and frontend in `frontend`;  
+1. Todo list - CRUD operations on backend;
+2. Todo list - Connect your CRUD operations with frontend;
+3. Authorization (login/signup) backend;
+4. Authorization (login/signup) frontend;
+5. Filters for todo list by title and statuses (private and completed);
+6. Button pagination;
+7. Made same UI for mobile app and connect it to your backend;
 
-> Use technologies from `Useful links and technologies`
+### NOTES  
+
+> Backend should have stored in `server` dir and frontend in `frontend`, mobile should be stored in `mobile` dir.  
+> Use technologies from `Useful links and technologies`. You should create separate pr for each task.
 
 Design: [https://balsamiq.cloud/syedgi8/pnzr5a1/r050B](https://balsamiq.cloud/syedgi8/pnzr5a1/r050B)  
 
@@ -29,3 +34,4 @@ Design: [https://balsamiq.cloud/syedgi8/pnzr5a1/r050B](https://balsamiq.cloud/sy
 [Mongoose](https://mongoosejs.com/)  
 [Typescript](https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html)
 [Passport](http://www.passportjs.org/)
+[Expo](https://docs.expo.io/)
