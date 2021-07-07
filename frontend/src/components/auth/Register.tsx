@@ -1,12 +1,13 @@
-import React from "react";
+import React, {useState} from "react";
 import '../../index.css'
 import axios from "axios";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 
 
 const Register = () => {
+    const [redirect, setRedirect] = useState(false)
     const validationSchema = yup.object().shape({
         email: yup.string()
             .email('Invalid email')
@@ -17,8 +18,11 @@ const Register = () => {
     })
 
     const onSubmit = async (values) => {
-        await axios.post('http://localhost:5000/api/register', values).then(res => console.log(res));
-    }
+        await axios.post('http://localhost:5000/api/register', values).then(res => {
+                console.log(res)
+                setRedirect(!redirect)
+        });
+     }
 
     const formik = useFormik({
         initialValues: {
@@ -47,10 +51,11 @@ const Register = () => {
                     {formik.errors.confirmPassword ? <div className='formik-errors'>{formik.errors.confirmPassword}</div> : null}
                 </div>
                 <div className="form-group">
-                    <Link to='/login'><button type='submit' className='primary_button'>Register</button></Link>
+                    <button type='submit' className='primary_button'>Register</button>
                     <div><p>Have an account? <Link to='/login' className='redirect_link'><i className='secondary_button'>Login</i></Link></p></div>
                 </div>
             </form>
+            {redirect ? <Redirect to='/login' /> : null}
         </div>
     );
 }

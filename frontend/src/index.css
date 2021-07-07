@@ -42,6 +42,24 @@ code {
   resize: none;
 }
 
+.search-todo  {
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: 3px solid #ccc;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+  outline: none;
+}
+
+.filtering-select {
+  outline: none;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  padding: 12px 25px;
+  margin: 8px 0;
+}
+
 .invalid-feedback {
   font-size: 12px;
   color: red;
@@ -77,7 +95,8 @@ code {
 
 .delete_icon,
 .edit_icon,
-.logout_icon {
+.logout_icon,
+.pagination-icon {
   cursor: pointer;
   size: 30px;
 }
@@ -134,6 +153,33 @@ h1 {
   text-align: center;
 }
 
+.filtering-todo {
+  text-align: center;
+}
+
+.pagination {
+  text-align: center;
+  margin-bottom: 20px;
+}
 
 
+.pagination-button {
+  margin: 5px;
+  background-color: #555555;
+  border: 1px solid #555555;
+  color: white;
+  padding: 10px 25px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+}
+
+
+.pagination-button:hover {
+  background-color: white;
+  color: #555555;
+  border: 1px solid #555555;
+}
 

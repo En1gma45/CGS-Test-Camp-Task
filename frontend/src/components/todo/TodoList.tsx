@@ -16,43 +16,69 @@ export interface Todo {
 interface TodoListProps {
     todos: Todo[],
     setTodos: (todos: Todo[]) => void,
+
+
 }
 
-const TodoList = ({todos, setTodos}: TodoListProps) => {
-    const [redirect, setRedirect] = useState(false)
 
-    const handleDelete = todo => {
-        axios.delete(`http://localhost:5000/todos/${todo._id}`).then(res => {
-            if(res.status === 200) {
-                setTodos(res.data.todos)
-            }
-        })
-    }
+const TodoList = ({todos, setTodos }: TodoListProps) => {
+        const [redirect, setRedirect] = useState(false)
+        const [task, setTask]: any = useState({})
+        const [search, setSearch] = useState('')
 
-    const handleEdit =  () => {
-        setRedirect(!redirect)
-    }
+        const handleDelete = todo => {
+            axios.delete(`http://localhost:5000/todos/${todo._id}`, {headers: {'Authorization': localStorage.getItem('token')}}).then(res => {
+                if(res.status === 200) {
+                    setTodos(res.data.todos)
 
-    return (
-        <div>
-            {todos.map(todo => (
-                redirect
-                    ? <EditTodo todos={todos} setTodos={setTodos} todo={todo} redirect={redirect} setRedirect={setRedirect}/>
+                }
+            })
+        }
+
+
+         const handleEdit = (todo) => {
+            setRedirect(!redirect)
+            setTask(todo)
+        }
+
+
+        const searchedTodos = todos.filter(todo => {
+            return todo.title.toLowerCase().indexOf(search.toLowerCase()) !== -1;
+        });
+
+        return (
+            <div>
+                {redirect
+                    ? <EditTodo todos={todos} setTodos={setTodos} todo={task} redirect={redirect} setRedirect={setRedirect} />
                     :
-                    <div key={todo._id} className='todo_form'>
-                        <div className='todo_form_about'>
-                            <p><b>{todo.title} {todo.year}</b></p>
-                            <p>{todo.description}</p>
-                            <p><i>{todo.isCompleted ? 'Completed' : 'Not Completed'}, {todo.isPublic ? 'Public' : 'Private'}</i></p>
+                    <div>
+                        <div className='filtering-todo'>
+                            <input type="text" className='search-todo' value={search} onChange={e => setSearch(e.target.value)} placeholder='Search Todo'/>
                         </div>
-                        <div className='todo_form_buttons'>
-                            <MdEdit size='25px' className='edit_icon' onClick={handleEdit}/>
-                            <MdDelete size='25px' className='delete_icon' onClick={() => handleDelete(todo)}/>
-                        </div>
+                        {searchedTodos.length ?
+                            searchedTodos.map(todo => (
+                                <div key={todo._id} className='todo_form'>
+                                    <div className='todo_form_about'>
+                                        <p><b>{todo.title} {todo.year}</b></p>
+                                        <p>{todo.description}</p>
+                                        <p><i>{todo.isCompleted ? 'Completed' : 'Not Completed'}, {todo.isPublic ? 'Public' : 'Private'}</i>
+                                        </p>
+                                    </div>
+                                    <div className='todo_form_buttons'>
+                                        <MdEdit size='25px' className='edit_icon' onClick={() => handleEdit(todo)}/>
+                                        <MdDelete size='25px' className='delete_icon' onClick={() => handleDelete(todo)}/>
+                                    </div>
+                                </div>
+                            )) :
+                            <div>
+                                <h1>Nothing was found</h1>
+                            </div>
+                        }
                     </div>
-            ))}
-        </div>
-    );
-};
+
+                }
+            </div>
+        );
+    };
 
 export default TodoList;

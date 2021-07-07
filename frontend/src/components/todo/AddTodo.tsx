@@ -13,18 +13,18 @@ interface TodoFormProps {
 }
 
 const AddTodo = ({ todos, setTodos }: TodoFormProps) => {
+    const year = new Date().getFullYear()
     const [redirect, setRedirect] = useState(false)
     const validationSchema = yup.object().shape({
-        title: yup.string()
-            .required('Title is required'),
+        title: yup.string().required('Title is required'),
         description: yup.string(),
-        year: yup.number().typeError('Must be a number'),
+        year: yup.number().typeError('Must be a number').min(year).max(year),
         isPublic: yup.boolean(),
         isCompleted: yup.boolean()
     })
 
     const onSubmit = async (values) => {
-        await axios.post('http://localhost:5000/todos', values).then(res => {
+        await axios.post('http://localhost:5000/todos', values, {headers: {'Authorization': localStorage.getItem('token')}}).then(res => {
             if(res.status === 200) {
                 let todo = res.data.todo
                 setRedirect(!redirect)

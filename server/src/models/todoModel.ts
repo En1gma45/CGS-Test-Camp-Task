@@ -9,24 +9,26 @@ const todoSchema: Schema = new Schema(
         },
 
         description: {
-            type: String,
-            required: true,
+            type: String
         },
 
         year: {
-            type: Number,
-            required: true
+            type: Number
         },
 
         isPublic: {
             type: Boolean,
-            required: true,
+            required: true
         },
 
         isCompleted: {
             type: Boolean,
-            required: true,
+            required: true
         },
+        author: {
+            type: Schema.Types.ObjectId,
+            ref: 'User'
+        }
 
     },
     { timestamps: true }
