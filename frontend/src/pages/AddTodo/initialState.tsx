@@ -1,8 +1,9 @@
 const initialState = {
   title: "",
   description: "",
-  year: "",
+  year: 0,
   public: false,
-  completed:false
+  completed: false,
+  _id: null
 }
 export default initialState
