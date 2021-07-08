@@ -48,8 +48,8 @@ router.get(
 router.post(
     "/",
     [
-        check("title", "Please include a valid title").isLength({min: 6, max: 100}),
-        check("description", "Please include a valid description").isLength({min: 20, max: 1000}),
+        check("title", "Please include a valid title").isLength({min: 5, max: 50}),
+        check("description", "Please include a valid description").isLength({min: 5, max: 100}),
         check("year", "Please include a valid year").isInt({min: 1970, max: 2040}),
         check("isPublic", "Please include a valid public").isBoolean(),
         check("isCompleted", "Please include a valid completed").isBoolean()
@@ -65,7 +65,7 @@ router.post(
         try {
             let todo = new Todo(req.body);
             await todo.save();
-            return res.status(HttpStatusCodes.CREATED).json(todo);
+            return res.status(200).json(todo);
         } catch (err) {
             console.error(err.message);
             res.status(HttpStatusCodes.INTERNAL_SERVER_ERROR).send("Server Error");
@@ -77,8 +77,8 @@ router.post(
 router.put(
     "/:id",
     [
-        check("title", "Please include a valid title").isLength({min: 6, max: 100}),
-        check("description", "Please include a valid description").isLength({min: 20, max: 1000}),
+        check("title", "Please include a valid title").isLength({min: 5, max: 50}),
+        check("description", "Please include a valid description").isLength({min: 5, max: 100}),
         check("year", "Please include a valid year").isInt({min: 1970, max: 2040}),
         check("isPublic", "Please include a valid public").isBoolean(),
         check("isCompleted", "Please include a valid completed").isBoolean()
@@ -110,7 +110,7 @@ router.put(
             todo.isCompleted = req.body.isCompleted;
 
             await todo.save();
-            return res.status(HttpStatusCodes.OK).json({todo});
+            return res.status(200).json({todo});
         } catch (err) {
             console.error(err.message);
             res.status(HttpStatusCodes.INTERNAL_SERVER_ERROR).send("Server Error");
