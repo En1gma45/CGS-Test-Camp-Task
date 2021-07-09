@@ -6,3 +6,7 @@ export type Todo = {
   year: number,
   _id:string | null 
 }
+export interface IAction {
+  payload?: any;
+  type:string
+}

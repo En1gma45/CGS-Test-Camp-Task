@@ -7,7 +7,7 @@ export interface TodosElementProps {
  
 const TodosElement: React.SFC<TodosElementProps> = ({todo,deleteTodo,changeTodo}) => {
   return (
-    <>
+    <li style={{listStyle:"none",width:"300px"}}>
       <p>{todo.title}</p>
       <p>{todo.year}</p>
       <p>{todo.description}</p>
@@ -15,7 +15,7 @@ const TodosElement: React.SFC<TodosElementProps> = ({todo,deleteTodo,changeTodo}
       {todo.public ? <p>Public</p> : <p>Private</p>}
       <button onClick={() => deleteTodo(todo._id || "0")}>Delte</button>
       <button onClick={()=>changeTodo(todo._id || "0")}>Edit</button>
-      </>
+      </li>
    );
 }
  

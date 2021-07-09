@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { shallowEqual, useSelector } from 'react-redux'
 import { Todo } from "../../interfaces";
+import styles from './Todos.module.css'
 import initialState from "./exampleinitialState";
 import TodosList from "./TodosList/TodosList";
 import AddTodoPage from "../AddTodo/AddTodo";
@@ -39,7 +40,7 @@ const TodosMainPage: React.SFC<TodosMainPageProps> = () => {
   }
   return (
     <>
-      {!create && <button onClick={createToggle}>Create New Todo</button>}
+      {!create && <div className={styles.btnAdd}><button  onClick={createToggle}>Create New Todo</button></div>}
       {!create ? <TodosList todos={todos}  deleteTodo={deleteTodo} changeTodo={changeTodo} /> : <AddTodoPage editOneTodo={editOneTodo} createToggle={createToggle} editTodo={editTodo} addToList={addToList}/>}
       </>
    );

@@ -9,9 +9,9 @@ export interface TodosListProps {
 const TodosList: React.SFC<TodosListProps> = ({ todos,deleteTodo,changeTodo }) => {
   const renderTodo = todos.map((todo, index) => <TodosElement key={index} deleteTodo={deleteTodo} changeTodo={changeTodo}todo={todo}/>)
   return (
-    <>
+    <ul>
       {renderTodo}
-      </>
+      </ul>
    );
 }
  
