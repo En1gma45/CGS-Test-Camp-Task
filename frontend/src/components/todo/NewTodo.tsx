@@ -2,10 +2,9 @@ import React, {useState} from 'react';
 import axios from "axios";
 import {Todo} from "./TodoList";
 import {Redirect} from "react-router";
-import * as yup from "yup";
 import {useFormik} from "formik";
-import { Link } from 'react-router-dom';
-
+import {Link} from 'react-router-dom';
+import validation from '../helpers/validator'
 
 interface TodoItems {
     todos: Todo[]
@@ -16,20 +15,12 @@ const NewTodo = ({todos, setTodos}: TodoItems) => {
 
     const [redirect, setRedirect] = useState(false)
 
-    const validation = yup.object().shape({
-        title: yup.string().required('Please, enter the title'),
-        description: yup.string().required('Please, enter the description'),
-        year: yup.number().min(1970, 'Must be at least 1970').max(2040, 'Must be not more than 2040').typeError('Must be a number').required('Please, enter the year'),
-        isPublic: yup.boolean(),
-        isCompleted: yup.boolean()
-    })
 
     const onSubmit = async (values: any) => {
         await axios.post('http://localhost:5000/api/todo', values).then(res => {
             if (res.status === 200) {
                 let todo = res.data.todo
                 setRedirect(!redirect)
-                console.log(redirect)
                 setTodos([...todos, todo])
             } else console.log("FALSE")
         })
@@ -54,17 +45,20 @@ const NewTodo = ({todos, setTodos}: TodoItems) => {
                         <form className='form-main' onChange={formik.handleChange} onSubmit={formik.handleSubmit}>
                             <h1>Create new Todo</h1>
                             <div className="form-control">
-                                <input className="input-title" size={30} id='title' name="title" type="text" placeholder='Title'/>
+                                <input className="input-title" size={30} id='title' name="title" type="text"
+                                       placeholder='Title'/>
                                 {formik.errors.title ?
                                     <div className='formik-errors'>{formik.errors.title}</div> : null}
                             </div>
                             <div>
-                    <textarea className="form-control-desc" rows={10} placeholder='Description'  id='description' name="description"/>
+                                <textarea className="form-control-desc" rows={10} placeholder='Description'
+                                          id='description' name="description"/>
                                 {formik.errors.description ?
                                     <div className='formik-errors'>{formik.errors.description}</div> : null}
                             </div>
                             <div className="form-control">
-                                <input size={30} className="input-year" id='year' name="year" type="text" placeholder='Year'/>
+                                <input size={30} className="input-year" id='year' name="year" type="text"
+                                       placeholder='Year'/>
                                 {formik.errors.year ? <div className='formik-errors'>{formik.errors.year}</div> : null}
                             </div>
                             <div className="form-control-check">

@@ -3,15 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="4727009b-bb29-448c-80f6-14057c65ebd6" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/public/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/index.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/yarn.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/server/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/todo/EditTodo.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/todo/EditTodo.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/todo/NewTodo.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/todo/NewTodo.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/routes/api/todo.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/routes/api/todo.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/server.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/server.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/server/yarn.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,6 +18,8 @@
       <list>
         <option value="TypeScript JSX File" />
         <option value="TypeScript File" />
+        <option value="package.json" />
+        <option value="JavaScript File" />
       </list>
     </option>
   </component>
@@ -36,6 +33,10 @@
       <filtered-out-file-type name="TAG" />
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/frontend/src/components/helpers/validator.js" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/server/src/helpers/validator.ts" root0="SKIP_INSPECTION" />
   </component>
   <component name="ProjectId" id="1uvreRq0z0gd1MstPt2nuyxUFtZ" />
   <component name="ProjectViewState">
@@ -75,11 +76,24 @@
       <workItem from="1625634090447" duration="24155000" />
       <workItem from="1625666952543" duration="3865000" />
       <workItem from="1625720284573" duration="3443000" />
-      <workItem from="1625724774270" duration="670000" />
+      <workItem from="1625724774270" duration="6748000" />
+      <workItem from="1625745279278" duration="708000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>
