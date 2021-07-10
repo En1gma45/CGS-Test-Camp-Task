@@ -5,6 +5,7 @@ import styles from './Todos.module.css'
 import initialState from "./exampleinitialState";
 import TodosList from "./TodosList/TodosList";
 import AddTodoPage from "../AddTodo/AddTodo";
+import FormFormik from '../AddTodo/Form/Formik'
 export interface TodosMainPageProps {
   
 }
@@ -40,8 +41,9 @@ const TodosMainPage: React.SFC<TodosMainPageProps> = () => {
   }
   return (
     <>
-      {!create && <div className={styles.btnAdd}><button  onClick={createToggle}>Create New Todo</button></div>}
-      {!create ? <TodosList todos={todos}  deleteTodo={deleteTodo} changeTodo={changeTodo} /> : <AddTodoPage editOneTodo={editOneTodo} createToggle={createToggle} editTodo={editTodo} addToList={addToList}/>}
+      {/* {!create && <div className={styles.btnAdd}><button  onClick={createToggle}>Create New Todo</button></div>}
+      {!create ? <TodosList todos={todos}  deleteTodo={deleteTodo} changeTodo={changeTodo} /> : <AddTodoPage editOneTodo={editOneTodo} createToggle={createToggle} editTodo={editTodo} addToList={addToList}/>} */}
+      <FormFormik/>
       </>
    );
 }
