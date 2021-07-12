@@ -6,10 +6,12 @@ import validation from '../helpers/validator';
 import TodoProvider from "../../providers/TodoProvider";
 
 
+
 const EditTodo = ({}) => {
 
     const [redirect, setRedirect] = useState(false)
     const location: any = useLocation();
+
 
     const provider: TodoProvider = new TodoProvider();
     const id: string = location.state.todo._id;
@@ -18,6 +20,7 @@ const EditTodo = ({}) => {
         await provider.edit(values, id);
         setRedirect(!redirect);
     }
+
 
     const formik = useFormik({
         initialValues: {
