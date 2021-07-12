@@ -1,5 +1,5 @@
 import {Response, Router} from "express";
-import {check, validationResult} from "express-validator/check";
+import {validationResult} from "express-validator/check";
 import Request from "Request";
 import HttpStatusCodes from "http-status-codes";
 import Todo, {ITodo} from "../../models/Todo";
@@ -83,7 +83,6 @@ router.put(
         }
 
         try {
-            let mongoose = require('mongoose');
 
             if (!mongoose.Types.ObjectId.isValid(req.params.id))
                 res.status(HttpStatusCodes.BAD_REQUEST).json({"error": "Wrong id format"})

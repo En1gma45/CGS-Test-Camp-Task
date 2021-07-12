@@ -3,16 +3,20 @@ import {useFormik} from "formik";
 import axios from "axios";
 import {Link, Redirect, useLocation} from 'react-router-dom';
 import validation from '../helpers/validator';
+import TodoProvider from "../../providers/TodoProvider";
+
 
 const EditTodo = ({}) => {
 
     const [redirect, setRedirect] = useState(false)
     const location: any = useLocation();
 
+    const provider: TodoProvider = new TodoProvider();
+    const id: string = location.state.todo._id;
+
     const handleSubmit = async (values: any) => {
-        await axios.put(`http://localhost:5000/api/todo/${location.state.todo._id}`, values).then(res => {
-            setRedirect(!redirect)
-        })
+        await provider.edit(values, id);
+        setRedirect(!redirect);
     }
 
     const formik = useFormik({

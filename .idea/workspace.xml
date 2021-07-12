@@ -2,11 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4727009b-bb29-448c-80f6-14057c65ebd6" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/frontend/src/providers/BaseProvider.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/providers/TodoProvider.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/components/todo/EditTodo.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/todo/EditTodo.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/components/todo/NewTodo.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/todo/NewTodo.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/routes/api/todo.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/routes/api/todo.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,10 +17,10 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="TypeScript JSX File" />
-        <option value="TypeScript File" />
         <option value="package.json" />
         <option value="JavaScript File" />
+        <option value="TypeScript File" />
+        <option value="TypeScript JSX File" />
       </list>
     </option>
   </component>
@@ -35,8 +36,9 @@
     </file-type-list>
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/frontend/src/components/helpers/validator.js" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/server/src/helpers/validator.ts" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/frontend/src/components/helpers/validator.js" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/server/src/routes/api/todo.ts" root0="SKIP_INSPECTION" />
   </component>
   <component name="ProjectId" id="1uvreRq0z0gd1MstPt2nuyxUFtZ" />
   <component name="ProjectViewState">
@@ -47,10 +49,15 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/frontend/package.json" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_package_manager_path" value="yarn" />
-    <property name="ts.external.directory.path" value="C:\Program Files\JetBrains\WebStorm 2021.1.1\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
+    <property name="ts.external.directory.path" value="C:\Users\teymu\Desktop\Проект 2.3 ( Refactor CRUD + ValidationFront )\CGS-Test-Camp-Task\server\node_modules\typescript\lib" />
     <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\teymu\Desktop\Проект 2.3 ( Refactor CRUD + ValidationFront )\CGS-Test-Camp-Task\frontend\src\providers" />
+    </key>
   </component>
   <component name="RunManager">
     <configuration name="start" type="js.build_tools.npm" nameIsGenerated="true">
@@ -78,6 +85,14 @@
       <workItem from="1625720284573" duration="3443000" />
       <workItem from="1625724774270" duration="6748000" />
       <workItem from="1625745279278" duration="708000" />
+      <workItem from="1625814817160" duration="2859000" />
+      <workItem from="1625820784810" duration="5410000" />
+      <workItem from="1625854208287" duration="3741000" />
+      <workItem from="1626029215746" duration="3210000" />
+      <workItem from="1626065917912" duration="1706000" />
+      <workItem from="1626067722456" duration="2982000" />
+      <workItem from="1626071156189" duration="3000" />
+      <workItem from="1626071823167" duration="10000" />
     </task>
     <servers />
   </component>

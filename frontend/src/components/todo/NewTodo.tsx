@@ -1,10 +1,12 @@
 import React, {useState} from 'react';
-import axios from "axios";
 import {Todo} from "./TodoList";
 import {Redirect} from "react-router";
 import {useFormik} from "formik";
 import {Link} from 'react-router-dom';
 import validation from '../helpers/validator'
+import TodoProvider from "../../providers/TodoProvider";
+
+
 
 interface TodoItems {
     todos: Todo[]
@@ -15,16 +17,13 @@ const NewTodo = ({todos, setTodos}: TodoItems) => {
 
     const [redirect, setRedirect] = useState(false)
 
+    const provider: TodoProvider = new TodoProvider();
 
     const onSubmit = async (values: any) => {
-        await axios.post('http://localhost:5000/api/todo', values).then(res => {
-            if (res.status === 200) {
-                let todo = res.data.todo
-                setRedirect(!redirect)
-                setTodos([...todos, todo])
-            } else console.log("FALSE")
-        })
+        await provider.create(values);
+        setRedirect(!redirect);
     }
+
 
     const formik = useFormik({
         initialValues: {
