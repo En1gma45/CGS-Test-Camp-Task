@@ -11,3 +11,92 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.todo-list {
+  display: flex;
+  max-width: 700px;
+  border-style: groove;
+  padding: 10px;
+  margin: 1% auto 0;
+  border-radius: 5px;
+}
+
+.todo-list-info div p {
+  max-width: 500px;
+}
+
+.todo-buttons {
+  display: flex;
+  margin: auto 50px auto auto;
+  height: 50px;
+}
+
+.todo-buttons:hover {
+  cursor: pointer;
+}
+
+.icon {
+  padding-top: 15px;
+  padding-left: 20px;
+}
+
+.loading {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+  font-size: 25px;
+}
+
+.create-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 25px;
+}
+
+.form-wrapper {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  margin-top: 25px;
+}
+
+.form-main {
+  border-radius: 5px;
+  background-color: #ffffff;
+  width: 290px;
+  height: 600px;
+}
+
+.form-control {
+  padding: 15px;
+}
+
+.form-control-desc {
+   width: 250px;
+}
+
+
+.input-title, .input-year {
+  font-size: 15px;
+}
+
+.form-control-check {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px 15px;
+}
+
+.create-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.create-button-size {
+  width: 265px;
+  height: 25px;
+}

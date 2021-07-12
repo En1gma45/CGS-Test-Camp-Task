@@ -3,12 +3,16 @@ import {check, validationResult} from "express-validator/check";
 import Request from "Request";
 import HttpStatusCodes from "http-status-codes";
 import Todo, {ITodo} from "../../models/Todo";
+import validationCheck from '../../helpers/validator';
 
 const router: Router = Router();
 
+let mongoose = require('mongoose');
+
+
 router.get(
     "/",
-    [],
+    validationCheck,
     async (req: Request, res: Response) => {
         try {
             let todos: ITodo[] = await Todo.find({});
@@ -23,10 +27,9 @@ router.get(
 
 router.get(
     "/:id",
-    [],
+    validationCheck,
     async (req: Request, res: Response) => {
         try {
-            let mongoose = require('mongoose');
 
             if (!mongoose.Types.ObjectId.isValid(req.params.id))
                 res.status(HttpStatusCodes.BAD_REQUEST).json({"error": "Wrong id format"})
@@ -47,13 +50,7 @@ router.get(
 
 router.post(
     "/",
-    [
-        check("title", "Please include a valid title").isLength({min: 6, max: 100}),
-        check("description", "Please include a valid description").isLength({min: 20, max: 1000}),
-        check("year", "Please include a valid year").isInt({min: 1970, max: 2040}),
-        check("isPublic", "Please include a valid public").isBoolean(),
-        check("isCompleted", "Please include a valid completed").isBoolean()
-    ],
+   validationCheck,
     async (req: Request, res: Response) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
@@ -65,7 +62,7 @@ router.post(
         try {
             let todo = new Todo(req.body);
             await todo.save();
-            return res.status(HttpStatusCodes.CREATED).json(todo);
+            return res.status(200).json(todo);
         } catch (err) {
             console.error(err.message);
             res.status(HttpStatusCodes.INTERNAL_SERVER_ERROR).send("Server Error");
@@ -76,13 +73,7 @@ router.post(
 
 router.put(
     "/:id",
-    [
-        check("title", "Please include a valid title").isLength({min: 6, max: 100}),
-        check("description", "Please include a valid description").isLength({min: 20, max: 1000}),
-        check("year", "Please include a valid year").isInt({min: 1970, max: 2040}),
-        check("isPublic", "Please include a valid public").isBoolean(),
-        check("isCompleted", "Please include a valid completed").isBoolean()
-    ],
+    validationCheck,
     async (req: Request, res: Response) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
@@ -110,7 +101,7 @@ router.put(
             todo.isCompleted = req.body.isCompleted;
 
             await todo.save();
-            return res.status(HttpStatusCodes.OK).json({todo});
+            return res.status(200).json({todo});
         } catch (err) {
             console.error(err.message);
             res.status(HttpStatusCodes.INTERNAL_SERVER_ERROR).send("Server Error");
