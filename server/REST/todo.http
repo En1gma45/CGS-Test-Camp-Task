@@ -1,0 +1,30 @@
+### Create a new todo
+POST  http://localhost:5000/api/todos
+content-type: application/json
+
+{ "title": "My First Todo" }
+
+### Todo id variable to use in the next requests
+@todoId = 60ec73a9e0c7eeb524b96f96
+
+### Get all todos
+GET http://localhost:5000/api/todos
+
+### Get todo by id
+GET http://localhost:5000/api/todos/{{$todoId}}
+
+### Update todo by id
+PUT http://localhost:5000/api/todos/{{$todoId}}
+content-type: application/json
+
+{
+  "title": "My First Todo",
+  "description": "Some desc",
+  "year": 2021,
+  "isPublic": true,
+  "isCompleted": true
+}
+
+### Delete todo by id
+DELETE http://localhost:5000/api/todos/{{$todoId}}
+content-type: application/json
