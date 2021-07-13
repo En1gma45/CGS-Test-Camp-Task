@@ -1,5 +1,5 @@
 import React, { MouseEvent } from "react";
-
+import { Field } from "formik";
 export interface CInputProps {
   idForInput: string,
   nameLabel: string,
@@ -16,7 +16,7 @@ const CInput: React.SFC<CInputProps> = ({idForInput,nameLabel,typeInput,value,ch
   return (
     <>
     <label htmlFor={idForInput}>{nameLabel}</label>
-      <input onClick={handleClick} onChange={handleChangeInput || handleChangeCheckBox} id={idForInput} type={typeInput} name={nameInput} value={value} checked={checked}></input>
+      <Field onClick={handleClick} onChange={handleChangeInput || handleChangeCheckBox} id={idForInput} type={typeInput} name={nameInput} value={value} checked={checked}/>
       </>
    );
 }

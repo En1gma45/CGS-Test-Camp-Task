@@ -1,30 +1,39 @@
-import { createReducer,PayloadAction } from "@reduxjs/toolkit";
 import { combineReducers } from "redux";
-import todoActions from './action'
+import {TodosActionType,TodoGetError,TodoPostTodoError,TodoUpdateTodoError,TodoGetSuccess,TodoPostTodoSuccess,TodoUpdateTodoSuccess,TodosError} from './interfacesActions'
 import {Todo} from '../../interfaces'
-interface IState {
-  todos:Todo[]
+
+const initialState:Todo[] = []
+const todo = (state = initialState, action:TodosActionType) => {
+  switch (action.type) {
+    case TodoGetSuccess:
+      return action.payload
+    case TodoPostTodoSuccess:
+      return [...state, action.payload]
+    case TodoUpdateTodoSuccess:
+    const updated = state.filter(elem => elem._id === action.payload._id)
+    const idx = state.indexOf(updated[0])
+    const newState = [...state]
+      newState.splice(idx, 1, action.payload)
+      return newState
+    default:
+      return state
+   }
 }
-const todos = createReducer([], {
-  // [todoActions.todoGetSuccess.type]: (_, { payload }) => payload,
-  [todoActions.todoPostTodoSuccess]: (state: [], action: PayloadAction<any>) => [ ...state, action.payload ],
-  // [todoActions.todoUpdateTodoSuccess.type]: (state, { payload }) => {
-  //   const updated = state.filter(elem => elem._id === payload._id)
-  //   const idx = state.indexOf(updated)
-  //   const newState = [...state]
-  //   newState.splice(idx,1,payload)
-  //   return newState
+const errorState:boolean = false
+const error = (state = errorState, action:TodosError) => {
+  switch (action.type) {
+    case TodoGetError:
+      return true
+    case TodoPostTodoError:
+      return true
+    case TodoUpdateTodoError:
+      return true
+    default:
+      return state
   }
-})
-
-// const error = createReducer(null, {
-//   [todoActions.todoGetError.type]: (_, __) => true,
-//   [todoActions.todoPostTodoError.type]: (_, __) => true,
-//   [todoActions.todoUpdateTodoError.type]: (_, __) => true,
-// })
-
+}
 const rootReducer = combineReducers({
-  // todos,
-  // error
+  todo,
+  error
 })
 export default rootReducer

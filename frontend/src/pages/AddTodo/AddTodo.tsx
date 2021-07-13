@@ -3,6 +3,7 @@ import {v4} from 'uuid'
 import initialState from './initialState'
 import FormAddTodo from './Form/Form';
 import { Todo } from '../../interfaces';
+import FormFormik from './Form/Formik';
 export interface AddTodoPageProps {
   addToList(todo: Todo): void,
   editTodo: Todo[],
@@ -49,7 +50,10 @@ const AddTodoPage: React.SFC<AddTodoPageProps> = ({addToList,editTodo,createTogg
   }
   console.log(formData)
   return (
-    <FormAddTodo editTodo={editTodo} setformData={setformData} handleEdit={handleEdit} handleSubmit={handleSubmit} formData={formData} handleChangeInput={handleChangeInput} handleChangeCheckBox={handleChangeCheckBox} handleChangeArea={handleChangeArea}/>
+    <>
+    <FormAddTodo editTodo={editTodo} setformData={setformData} handleEdit={handleEdit} handleSubmit={handleSubmit} formData={formData} handleChangeInput={handleChangeInput} handleChangeCheckBox={handleChangeCheckBox} handleChangeArea={handleChangeArea} />
+      <FormFormik />
+      </>
    );
 }
  

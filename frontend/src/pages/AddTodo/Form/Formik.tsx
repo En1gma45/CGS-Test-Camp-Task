@@ -1,19 +1,21 @@
 import React from 'react';
-import { Formik } from 'formik'
-import * as yup from 'yup'
+import { Formik,Form } from 'formik'
+import CInput from '../../../shared/components/input';
+import validationSchema from './validation';
 export interface FormFormikProps {
   
 }
  
 const FormFormik: React.SFC<FormFormikProps> = () => {
-  const validationSchema = yup.object().shape({
-    name:yup.string().typeError("Должно быть строкой").required("Обязательно")
-  })
-  return (
   
+  return (
     <Formik
         initialValues={{
-          name: ""
+        title: "",
+        description: "",
+        year: "",
+        public: false,
+        completed:false
         }}
         onSubmit={(values) => {
           console.log(values)
@@ -23,23 +25,21 @@ const FormFormik: React.SFC<FormFormikProps> = () => {
       >
         {({ values, errors, touched, handleChange, handleBlur, isValid, handleSubmit, dirty }) => {
         <div>
-            <form onClick={handleSubmit}>
-              <label htmlFor="">Name</label>
-              <input type="text"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.name}
-              name="title"/>
+          <Form onClick={handleSubmit}>
+            <CInput idForInput="title" nameInput="title" value={values.title} handleChangeInput={handleChange} typeInput="text" nameLabel="title" />
+            <label htmlFor="description">Description</label>
+            <textarea onChange={handleChange} id="description" name="description" />
+            <CInput idForInput="year" nameInput="year" value={values.year} handleChangeInput={handleChange} typeInput="text" nameLabel="year" />
+            <CInput idForInput="public" nameInput="public" checked={values.public} handleChangeInput={handleChange} typeInput="checkbox" nameLabel="public" />
+            <CInput idForInput="completed" nameInput="completed" checked={values.completed} handleChangeInput={handleChange} typeInput="checkbox" nameLabel="completed"/>
             <button
               disabled={!dirty && !isValid}
               type="submit"
             >Отправить</button>
-            </form>
+            </Form>
           </div>
         }}
         </Formik>
-  
-    
    );
 }
  

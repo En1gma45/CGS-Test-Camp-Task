@@ -28,7 +28,7 @@ const FormAddTodo: React.SFC<FormProps> = ({ formData,setformData, handleChangeI
       <label htmlFor="FormAddTodo">Title</label>
       <input onClick={changeStatus} onChange={handleChangeInput} type="text" id="title" name="title" value={!status ? editTodo[0].title : formData.title} />
       <label htmlFor="description">Description</label>
-      <textarea onClick={changeStatus} onChange={handleChangeArea}  id="description" name="description" value={!status ? editTodo[0].description:formData.description} />
+      <textarea onClick={changeStatus} onChange={handleChangeArea} id="description" name="description" value={!status ? editTodo[0].description:formData.description} />
         <label htmlFor="year">Year</label>
         <input onClick={changeStatus} onChange={handleChangeInput} type="text" name="year" id="year" value={!status ? editTodo[0].year : formData.year} />
       <div className={styles.label}>

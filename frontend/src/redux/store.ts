@@ -1,11 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { getDefaultMiddleware } from "@reduxjs/toolkit";
-import todos from './todo/reducer'
+import todo from './todo/reducer'
 
 const middleware = [...getDefaultMiddleware()]
 const store = configureStore({
   reducer: {
-    todos
+    todo
   },
   middleware
 })

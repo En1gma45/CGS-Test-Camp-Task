@@ -1,16 +1,37 @@
 import { createAction } from "@reduxjs/toolkit";
-
-const todoGetRequest = createAction("/todoGetRequest")
-const todoGetSuccess = createAction("/todoGetSuccess",(payload?:object) => {
-  return {
-    payload
-  }
+import { ITodoGetRequest } from './interfacesActions'
+import {Todo} from '../../interfaces'
+interface IError {
+  status: string,
+  code: number,
+  message:string
+}
+interface ITodoPostTodoSuccess{
+  type: "todoPostTodoSuccess",
+  payload:Todo
+}
+// const todoGetRequest = createAction("/todoGetRequest")
+const todoGetRequest = ():ITodoGetRequest => ({
+  type: "todoGetRequest"
 })
-const todoGetError = createAction("/todoGetError",(payload:object) => {
-  return {
-    payload
-  }
+const todoGetSuccess = (todos: Todo[]) => ({
+  type: "todoGetSuccess",
+  payload:todos
 })
+// const todoGetSuccess = createAction("/todoGetSuccess",(payload?:object) => {
+//   return {
+//     payload
+//   }
+// })
+const todoGetError = (error:IError) => ({
+  type: "/todoGetError",
+  payload:error
+})
+// const todoGetError = createAction("/todoGetError",(payload:object) => {
+//   return {
+//     payload
+//   }
+// })
 
 const todoUpdateTodoRequest = createAction("/todoUpdateTodoRequest")
 const todoUpdateTodoSuccess = createAction("/todoUpdateTodoSuccess",(payload:object) => {
@@ -25,11 +46,15 @@ const todoUpdateTodoError = createAction("/todoUpdateTodoError",(payload:object)
 })
 
 const todoPostTodoRequest = createAction("/todoPostTodoRequest")
-const todoPostTodoSuccess = createAction("/todoPostTodoSuccess",(payload:object) => {
-  return {
-    payload
-  }
+const todoPostTodoSuccess = (post:Todo):ITodoPostTodoSuccess => ({
+  type: "todoPostTodoSuccess",
+  payload:post
 })
+// const todoPostTodoSuccess = createAction("/todoPostTodoSuccess",(payload:object) => {
+//   return {
+//     payload
+//   }
+// })
 const todoPostTodoError = createAction("/todoPostTodoError",(payload:object) => {
   return {
     payload
