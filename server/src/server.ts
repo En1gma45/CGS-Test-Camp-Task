@@ -23,7 +23,6 @@ app.get("/", (_req, res) => {
   res.send("API Running");
 });
 
-app.use("/api/auth", auth);
 app.use("/api/user", user);
 app.use("/api/profile", profile);
 
