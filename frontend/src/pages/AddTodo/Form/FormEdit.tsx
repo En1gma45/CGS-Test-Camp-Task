@@ -7,25 +7,25 @@ import { Todo } from '../../../interfaces'
 import { v4 } from 'uuid';
 export interface FormFormikProps {
   createToggle(): void,
-  addToList(todo: Todo): void,
-
+  editTodo: Todo[],
+  handleEdit(todo:Todo): void
 }
  
-const FormFormik: React.SFC<FormFormikProps> = ({createToggle,addToList}) => {
+const FormEdit: React.SFC<FormFormikProps> = ({createToggle,editTodo,handleEdit}) => {
+  console.log(editTodo)
   return (
     <Formik
         initialValues={{
-        title: "",
-        description: "",
-        year: "",
-        public: false,
-        completed: false,
-        _id:""
+        title: editTodo[0].title,
+        description: editTodo[0].description,
+        year: editTodo[0].year,
+        public: editTodo[0].public,
+        completed: editTodo[0].completed,
+        _id:editTodo[0]._id
         }}
         onSubmit={(values) => {
           console.log(values)
-          values._id = v4()
-          addToList(values)
+          handleEdit(values)
           createToggle()
         }}
       validationSchema={validationSchema}
@@ -44,7 +44,7 @@ const FormFormik: React.SFC<FormFormikProps> = ({createToggle,addToList}) => {
             <button
               disabled={!dirty && !isValid}
               type="submit"
-            >Create</button>
+            >Edit</button>
             </Form>
           </div>)
         }}
@@ -52,4 +52,4 @@ const FormFormik: React.SFC<FormFormikProps> = ({createToggle,addToList}) => {
    );
 }
  
-export default FormFormik;
+export default FormEdit;

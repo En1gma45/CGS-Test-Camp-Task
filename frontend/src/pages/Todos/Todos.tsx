@@ -38,10 +38,11 @@ const TodosMainPage: React.SFC<TodosMainPageProps> = () => {
     const index = allTodos.indexOf(editTodo[0])
     allTodos[index] = todo
     settodos(allTodos)
+    seteditTodo([])
   }
   return (
     <>
-      <FormFormik/>
+      {/* <FormFormik/> */}
       {!create && <div className={styles.btnAdd}><button  onClick={createToggle}>Create New Todo</button></div>}
       {!create ? <TodosList todos={todos} deleteTodo={deleteTodo} changeTodo={changeTodo} /> : <AddTodoPage editOneTodo={editOneTodo} createToggle={createToggle} editTodo={editTodo} addToList={addToList} />}
       </>

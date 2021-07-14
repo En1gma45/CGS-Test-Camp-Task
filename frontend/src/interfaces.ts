@@ -3,7 +3,7 @@ export type Todo = {
   completed: boolean,
   description: string,
   public: boolean,
-  year: number,
+  year: string,
   _id:string | null 
 }
 export interface IAction {
