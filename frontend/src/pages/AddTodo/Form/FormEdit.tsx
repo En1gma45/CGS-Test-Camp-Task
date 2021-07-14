@@ -4,7 +4,6 @@ import CInput from '../../../shared/components/input';
 import validationSchema from './validation';
 import styles from './Form.module.css'
 import { Todo } from '../../../interfaces'
-import { v4 } from 'uuid';
 export interface FormFormikProps {
   createToggle(): void,
   editTodo: Todo[],
