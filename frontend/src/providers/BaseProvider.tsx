@@ -2,12 +2,37 @@ import axios from 'axios';
 
 class BaseProvider {
 
-    post(baseUrl: string, resource: string, body: object) {
+
+    post(baseUrl: string, resource: string, body: object, includeAuthToken: boolean = true) {
+        if (includeAuthToken) {
+            return axios.post(baseUrl + resource, body, this.authHeader())
+                .then(res => BaseProvider.processResult(res))
+        }
         return axios.post(baseUrl + resource, body).then(res => BaseProvider.processResult(res))
     }
 
-    put(baseUrl: string, resource: string, id: string, body: object,) {
+    put(baseUrl: string, resource: string, id: string, body: object) {
         return axios.put(baseUrl + resource + id, body).then(res => BaseProvider.processResult(res))
+    }
+
+    get(baseUrl: string, resource: string, includeAuthToken: boolean = true) {
+        if (includeAuthToken) {
+            return axios.get(baseUrl + resource, this.authHeader())
+        }
+        return axios.get(baseUrl + resource);
+    }
+
+    delete(baseUrl: string, resource: string, id: string) {
+        return axios.delete(baseUrl + resource + id);
+    }
+
+    public authHeader() {
+        return {
+            headers: {
+                'Content-Type': 'application/json',
+                'x-auth-token': localStorage.getItem('token')
+            }
+        }
     }
 
     private static processResult(res: any) {

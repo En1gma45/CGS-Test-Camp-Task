@@ -20,7 +20,8 @@ const NewTodo = ({todos, setTodos}: TodoItems) => {
     const provider: TodoProvider = new TodoProvider();
 
     const onSubmit = async (values: any) => {
-        await provider.create(values);
+        console.log(values);
+        await provider.createTodo(values);
         setRedirect(!redirect);
     }
 
@@ -38,7 +39,7 @@ const NewTodo = ({todos, setTodos}: TodoItems) => {
     });
     return (
         <div>
-            {redirect ? <Redirect to="/"/> :
+            {redirect ? <Redirect to="/todo"/> :
                 <div>
                     <div className='form-wrapper'>
                         <form className='form-main' onChange={formik.handleChange} onSubmit={formik.handleSubmit}>
@@ -72,7 +73,7 @@ const NewTodo = ({todos, setTodos}: TodoItems) => {
                                 <button className="create-button-size" type='submit'>Create</button>
                             </div>
                             <div className="create-button">
-                                <Link to="/">
+                                <Link to="/todo">
                                     <button className="create-button-size" type='button'>Back</button>
                                 </Link>
                             </div>

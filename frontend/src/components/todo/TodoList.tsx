@@ -3,7 +3,9 @@ import axios from "axios";
 import {MdEdit} from 'react-icons/all'
 import {IoMdTrash} from 'react-icons/all'
 import Button from '@material-ui/core/Button';
-import {Link, Redirect } from 'react-router-dom';
+import {Link} from 'react-router-dom';
+import TodoProvider from "../../providers/TodoProvider";
+import {resetLocal} from "../utils";
 
 export interface Todo {
     _id: string
@@ -21,23 +23,20 @@ const TodoList = ({}) => {
     const [isLoading, setLoading] = useState(true);
     const [todos, setTodos] = useState<any[]>([])
 
+    const provider: TodoProvider = new TodoProvider();
 
 
-    const handleDelete = (todo: { _id: string; }) => {
-        axios.delete(`http://localhost:5000/api/todo/${todo._id}`).then(res => {
-            if (res.status === 200) {
-                axios.get('http://localhost:5000/api/todo/').then(response => {
-                    setTodos(response.data);
-                    setLoading(false)
-                })
-            }
-        })
-    }
-
+    const handleDelete = async (todo: { _id: string; }) => {
+        const id = todo._id;
+        await provider.deleteTodo(id);
+        provider.readTodo().then(response => {
+            setTodos(response.data.reverse());
+            setLoading(false)
+    } )}
 
     useEffect(() => {
-        axios.get('http://localhost:5000/api/todo/').then(response => {
-            setTodos(response.data);
+       provider.readTodo().then(response => {
+            setTodos(response.data.reverse());
             setLoading(false)
         })
     }, [])
@@ -50,7 +49,8 @@ const TodoList = ({}) => {
     return (
         <div>
             <div className="create-button">
-                <Link to="/newtodo">
+                <input type="button" value="RESET" onClick={() => resetLocal()} />
+                <Link style={{ textDecoration: 'none' }} to="/newtodo">
                 <Button variant="contained" color="primary">
                     Create new Todo
                 </Button>
@@ -72,7 +72,7 @@ const TodoList = ({}) => {
                                     state : {
                                         todo: todo
                                     }}
-                                } ><MdEdit size='25px' className='icon edit_icon'></MdEdit></Link>
+                                } ><MdEdit size='25px' className='icon edit_icon'/></Link>
                                 <IoMdTrash size='25px' className='icon edit_icon' onClick={() => handleDelete(todo)}/>
                             </div>
                         </div>

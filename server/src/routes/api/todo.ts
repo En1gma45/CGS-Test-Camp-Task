@@ -4,6 +4,11 @@ import Request from "Request";
 import HttpStatusCodes from "http-status-codes";
 import Todo, {ITodo} from "../../models/Todo";
 import validationCheck from '../../helpers/validator';
+import auth from "../../middleware/auth";
+import Payload from "Payload";
+import jwt from "jsonwebtoken";
+import config from "config";
+import extractId from "../../util/tokenUtil";
 
 const router: Router = Router();
 
@@ -14,8 +19,17 @@ router.get(
     "/",
     validationCheck,
     async (req: Request, res: Response) => {
+        let userId;
         try {
-            let todos: ITodo[] = await Todo.find({});
+            // @ts-ignore
+            userId = extractId(req.headers['x-auth-token']);
+        } catch (err) {
+            return res
+                .status(HttpStatusCodes.UNAUTHORIZED)
+                .json({ msg: "Token is not valid" });
+        }
+        try {
+            let todos: ITodo[] = await Todo.find({ userId });
             return res.status(HttpStatusCodes.OK).json(todos);
         } catch (err) {
             console.error(err.message);
@@ -53,6 +67,16 @@ router.post(
    validationCheck,
     async (req: Request, res: Response) => {
         const errors = validationResult(req);
+        let userId;
+        try {
+            // @ts-ignore
+            userId = extractId(req.headers['x-auth-token']);
+        } catch (err) {
+            return res
+                .status(HttpStatusCodes.UNAUTHORIZED)
+                .json({ msg: "Token is not valid" });
+        }
+
         if (!errors.isEmpty()) {
             return res
                 .status(HttpStatusCodes.BAD_REQUEST)
@@ -60,6 +84,8 @@ router.post(
         }
 
         try {
+            let body = req.body;
+            body['userId'] = userId;
             let todo = new Todo(req.body);
             await todo.save();
             return res.status(200).json(todo);

@@ -14,6 +14,7 @@ export interface ITodo extends Document {
     year: number;
     isPublic:boolean;
     isCompleted:boolean;
+    userId: string;
 }
 
 const todoSchema: Schema = new Schema({
@@ -36,7 +37,11 @@ const todoSchema: Schema = new Schema({
     isCompleted: {
         type: Boolean,
         required: true
-    }
+    },
+    userId: {
+        type: String,
+        required: true
+    },
 });
 
 const Todo: Model<ITodo> = model("Todo", todoSchema);

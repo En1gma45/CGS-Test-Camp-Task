@@ -6,6 +6,8 @@ import auth from "./routes/api/auth";
 import user from "./routes/api/user";
 import profile from "./routes/api/profile";
 import todo from "./routes/api/todo";
+import register from "./routes/api/register"
+
 
 const cors = require("cors");
 const app = express();
@@ -40,6 +42,8 @@ app.use("/api/auth", auth);
 app.use("/api/user", user);
 app.use("/api/profile", profile);
 app.use("/api/todo", todo);
+app.use("/api/register", register);
+
 
 const port = app.get("port");
 const server = app.listen(port, () =>

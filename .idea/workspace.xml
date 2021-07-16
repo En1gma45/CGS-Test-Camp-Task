@@ -2,12 +2,30 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4727009b-bb29-448c-80f6-14057c65ebd6" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/frontend/src/providers/BaseProvider.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/providers/TodoProvider.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/Home.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/Login.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/helpers/regValidator.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/routes/PrivateRouter.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/routes/PublicRouter.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/todo/Registration.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/utils/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/routes/api/register.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/util/tokenUtil.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/components/todo/EditTodo.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/todo/EditTodo.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/components/todo/NewTodo.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/todo/NewTodo.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/todo/TodoList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/todo/TodoList.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/index.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/providers/BaseProvider.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/providers/BaseProvider.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/providers/TodoProvider.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/providers/TodoProvider.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/tsconfig.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/config/default.json" beforeDir="false" afterPath="$PROJECT_DIR$/server/config/default.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/models/Todo.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/models/Todo.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/routes/api/auth.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/routes/api/auth.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/routes/api/todo.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/routes/api/todo.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/routes/api/user.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/routes/api/user.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/server.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/server.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -18,9 +36,9 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="package.json" />
+        <option value="TypeScript JSX File" />
         <option value="JavaScript File" />
         <option value="TypeScript File" />
-        <option value="TypeScript JSX File" />
       </list>
     </option>
   </component>
@@ -51,7 +69,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_package_manager_path" value="yarn" />
-    <property name="ts.external.directory.path" value="C:\Users\teymu\Desktop\Проект 2.3 ( Refactor CRUD + ValidationFront )\CGS-Test-Camp-Task\server\node_modules\typescript\lib" />
+    <property name="ts.external.directory.path" value="C:\Users\teymu\Desktop\Проект 2.3 ( Refactor CRUD + ValidationFront )\CGS-Test-Camp-Task\frontend\node_modules\typescript\lib" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
@@ -93,6 +111,15 @@
       <workItem from="1626067722456" duration="2982000" />
       <workItem from="1626071156189" duration="3000" />
       <workItem from="1626071823167" duration="10000" />
+      <workItem from="1626072501076" duration="9119000" />
+      <workItem from="1626153357767" duration="15348000" />
+      <workItem from="1626239299530" duration="5565000" />
+      <workItem from="1626253093120" duration="4407000" />
+      <workItem from="1626325230186" duration="9176000" />
+      <workItem from="1626342545305" duration="8610000" />
+      <workItem from="1626372705333" duration="5543000" />
+      <workItem from="1626412240409" duration="8794000" />
+      <workItem from="1626422507506" duration="23000" />
     </task>
     <servers />
   </component>

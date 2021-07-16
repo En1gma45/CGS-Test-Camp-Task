@@ -10,7 +10,10 @@ import Payload from "../../types/Payload";
 import Request from "../../types/Request";
 import User, { IUser } from "../../models/User";
 
+
+
 const router: Router = Router();
+
 
 // @route   GET api/auth
 // @desc    Get authenticated user given the token
@@ -35,6 +38,7 @@ router.post(
     check("password", "Password is required").exists()
   ],
   async (req: Request, res: Response) => {
+    console.log('25');
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res
@@ -42,7 +46,7 @@ router.post(
         .json({ errors: errors.array() });
     }
 
-    const { email, password } = req.body;
+    const { email } = req.body;
     try {
       let user: IUser = await User.findOne({ email });
 
@@ -55,8 +59,9 @@ router.post(
           ]
         });
       }
-
-      const isMatch = await bcrypt.compare(password, user.password);
+      const salt = await bcrypt.genSalt(10);
+      let passwordHash = await bcrypt.hash(user.password, salt);
+      const isMatch = await bcrypt.compare(req.body.password, passwordHash);
 
       if (!isMatch) {
         return res.status(HttpStatusCodes.BAD_REQUEST).json({
@@ -71,6 +76,7 @@ router.post(
       const payload: Payload = {
         userId: user.id
       };
+
 
       jwt.sign(
         payload,

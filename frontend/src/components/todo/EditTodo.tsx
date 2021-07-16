@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import {useFormik} from "formik";
-import axios from "axios";
 import {Link, Redirect, useLocation} from 'react-router-dom';
 import validation from '../helpers/validator';
 import TodoProvider from "../../providers/TodoProvider";
@@ -15,7 +14,8 @@ const EditTodo = ({}) => {
     const id: string = location.state.todo._id;
 
     const handleSubmit = async (values: any) => {
-        await provider.edit(values, id);
+        console.log('1');
+        await provider.updateTodo(values, id);
         setRedirect(!redirect);
     }
 
@@ -30,9 +30,9 @@ const EditTodo = ({}) => {
         validationSchema: validation,
         onSubmit: handleSubmit
     });
-
+    console.log(formik.errors);
     return (
-        redirect ? <Redirect to="/"/> :
+        redirect ? <Redirect to="/todo"/> :
             <div>
                 <div className="form-wrapper">
                     <form className='form-main' onChange={formik.handleChange} onSubmit={formik.handleSubmit}>
@@ -69,7 +69,7 @@ const EditTodo = ({}) => {
                             <button type='submit' className="create-button-size">Edit</button>
                         </div>
                         <div className="create-button">
-                            <Link to="/">
+                            <Link to="/todo">
                                 <button className="create-button-size" type='button'>Back</button>
                             </Link>
                         </div>
