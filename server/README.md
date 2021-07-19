@@ -1,6 +1,6 @@
 # Mongoose Node.js Express TypeScript application boilerplate with best practices for API development.
 
-## TO RUN PROJECT USE  
+## TO RUN PROJECT USE  ##
 
 1. `npm install -g yarn`
 2. `yarn`
