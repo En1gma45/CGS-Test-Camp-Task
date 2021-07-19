@@ -2,8 +2,9 @@ import React, {useState} from 'react';
 import {Redirect} from "react-router";
 import {useFormik} from "formik";
 import {Link} from 'react-router-dom';
-import axios from "axios";
 import regValidation from "../helpers/regValidator";
+import TodoProvider from "../../providers/TodoProvider";
+import InputField from "../InputField";
 
 
 const Registration = () => {
@@ -11,8 +12,10 @@ const Registration = () => {
     const [redirect, setRedirect] = useState(false)
 
 
+    const provider = new TodoProvider();
+
     const onSubmit = async (values: any) => {
-        await axios.post('http://localhost:5000/api/register', values);
+        await provider.registerUser(values);
         setRedirect(!redirect);
     }
 
@@ -30,23 +33,25 @@ const Registration = () => {
             {redirect ? <Redirect to="/"/> :
                 <div>
                     <div className='form-wrapper'>
-                        <form className='form-main form-reg' onChange={formik.handleChange} onSubmit={formik.handleSubmit}>
+                        <form className='form-main form-reg' onChange={formik.handleChange}
+                              onSubmit={formik.handleSubmit}>
                             <h1>Registration</h1>
                             <div className="form-control">
-                                <input className="input-title" size={30} id='email' name="email" type="text"
-                                       placeholder='E-mail'/>
+                                <InputField className={'input-title'} size={30} id={'email'} name={'email'}
+                                            type={'text'} placeholder={'E-mail'}/>
                                 {formik.errors.email ?
                                     <div className='formik-errors'>{formik.errors.email}</div> : null}
                             </div>
                             <div className="form-control">
-                                <input size={30} className="input-year" id='password' name="password" type="password"
-                                       placeholder='Password'/>
+                                <InputField className={'input-year'} size={30} id={'password'} name={'password'}
+                                            type={'password'} placeholder={'Password'}/>
                                 {formik.errors.password ?
                                     <div className='formik-errors'>{formik.errors.password}</div> : null}
                             </div>
                             <div className="form-control">
-                                <input size={30} className="input-year" id='confirmPassword' name="confirmPassword" type="password"
-                                       placeholder='Confirm password'/>
+                                <InputField className={'input-year'} size={30} id={'confirmPassword'}
+                                            name={'confirmPassword'} type={'password'}
+                                            placeholder={'Confirm Password'}/>
                                 {formik.errors.confirmPassword ?
                                     <div className='formik-errors'>{formik.errors.confirmPassword}</div> : null}
                             </div>

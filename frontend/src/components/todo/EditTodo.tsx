@@ -16,7 +16,6 @@ const EditTodo = ({}) => {
     const id: string = location.state.todo._id;
 
     const handleSubmit = async (values: any) => {
-        console.log('1');
         await provider.updateTodo(values, id);
         setRedirect(!redirect);
     }

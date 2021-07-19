@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react';
-import axios from "axios";
 import {MdEdit} from 'react-icons/all'
 import {IoMdTrash} from 'react-icons/all'
 import Button from '@material-ui/core/Button';

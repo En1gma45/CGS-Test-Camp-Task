@@ -26,6 +26,15 @@ class BaseProvider {
         return axios.delete(baseUrl + resource + id);
     }
 
+    login(baseUrl: string, resource: string, body: object) {
+        return axios.post(baseUrl + resource, body);
+    }
+
+    register(baseUrl: string, resource: string, body: object) {
+        return axios.post(baseUrl + resource, body);
+    }
+
+
     public authHeader() {
         return {
             headers: {
@@ -35,7 +44,7 @@ class BaseProvider {
         }
     }
 
-    private static processResult(res: any) {
+    static processResult(res: any) {
         if (res.status === 200) {
             return res.data.todo;
         } else if (res.status >= 400 && res.status < 500) {
