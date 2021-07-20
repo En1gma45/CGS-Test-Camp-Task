@@ -3,17 +3,38 @@
 > For This project use [MERN stask](https://www.mongodb.com/languages/mern-stack-tutorial)
 ## Required features
 
-1. Todo list - CRUD operations on backend;
-2. Todo list - Connect your CRUD operations with frontend;
-3. Authorization (login/signup) backend;
-4. Authorization (login/signup) frontend;
-5. Filters for todo list by title and statuses (private and completed);
-6. Button pagination;
-7. Made same UI for mobile app and connect it to your backend;
+1. **Todo list - CRUD operations on backend**;
 
+- _Each `PUT` `POST` rout should has validation of `req.body` and throw `400` error in case of failed validation_  
+- _Separate your logic from routes. You should perform all interactions with `DB` inside your `services/<filename>.service.ts` file and import it to `controllers/<filename>.controller.ts`. After that you can call your controllers in routes_
+
+2. **Todo list - Connect your CRUD operations with mobile**;
+
+- _You should split your code on logical components ( `<TodoContainer />`, `<TodoElement/>` etc);_  
+- _For Edit/Add you should use forms written with [Formik](https://formik.org/docs/overview);_  
+- _Put logic related to server interactions inside `service/http.ts` file (check [Our Documentation](https://github.com/CodeGeneration-2020/code-generation-code-style/blob/main/docs/javascript.md#server-interactions-))_
+- _For data fetching you can use [React Query](https://react-query.tanstack.com/), it also help you to globally store your data_
+
+3. **Authorization (login/signup) backend;**
+
+- _Use jwt [authorization](https://nodejsdev.ru/doc/jwt/) and [Passport](http://www.passportjs.org/) for that_
+- _Logic related to token processing should be stored in `middlewares/auth.middleware.ts`_
+
+4. **Authorization (login/signup) frontend;**
+
+- _Should store token in localStorage_
+- _Use Formik for handling validation and submit func_
+
+5. **Filters for todo list by title and statuses (private and completed);**
+
+- _You should pass filter params through `req.params`(`localhost:3000/todo?search=test&status=completed`)_
+
+6. **Button pagination;**
+
+- _All pagination should be handled by backend_
 ### NOTES  
 
-> Backend should have stored in `server` dir and frontend in `frontend`, mobile should be stored in `mobile` dir.  
+> Backend should have stored in `server` dir, mobile should be stored in `mobile` dir.  
 > Use technologies from `Useful links and technologies`. You should create separate pr for each task.
 
 Design: [https://balsamiq.cloud/syedgi8/pnzr5a1/r050B](https://balsamiq.cloud/syedgi8/pnzr5a1/r050B)  
@@ -35,3 +56,4 @@ Design: [https://balsamiq.cloud/syedgi8/pnzr5a1/r050B](https://balsamiq.cloud/sy
 [Typescript](https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html)
 [Passport](http://www.passportjs.org/)
 [Expo](https://docs.expo.io/)
+[React Query](https://react-query.tanstack.com/)
