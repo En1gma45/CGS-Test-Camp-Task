@@ -1,10 +1,10 @@
 import bodyParser from "body-parser";
 import express from "express";
-
 import connectDB from "../config/database";
-import auth from "./routes/api/auth";
+//import auth from "./routes/api/auth";
 import user from "./routes/api/user";
 import profile from "./routes/api/profile";
+import task from "./routes/api/task";
 
 const app = express();
 
@@ -25,6 +25,7 @@ app.get("/", (_req, res) => {
 
 app.use("/api/user", user);
 app.use("/api/profile", profile);
+app.use('/api/task', task)
 
 const port = app.get("port");
 const server = app.listen(port, () =>
