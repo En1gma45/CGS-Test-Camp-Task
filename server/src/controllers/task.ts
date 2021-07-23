@@ -9,7 +9,27 @@ class TaskController{
     async find(req: Request, res: Response){
         try {
             const { userId } = req.body
-            const tasks: Array<ITask> = await Task.find({ owner: userId })
+            const tasks: Array<ITask> = await Task.find()
+            if (!tasks) {
+                return res.status(HttpStatusCodes.BAD_REQUEST).json({
+                    errors: [
+                        {
+                            msg: "There is no tasks for this user",
+                        },
+                    ],
+                });
+            }
+            res.json(tasks);
+          } catch (err) {
+            console.error(err.message);
+            res.status(HttpStatusCodes.INTERNAL_SERVER_ERROR).send("Server Error");
+          }
+    }
+
+    //fetch current task
+    async findCurrentTask(req: Request, res: Response){
+        try {
+            const tasks: ITask = await Task.findById({_id: req.params.id })
             if (!tasks) {
                 return res.status(HttpStatusCodes.BAD_REQUEST).json({
                     errors: [
@@ -36,7 +56,7 @@ class TaskController{
         }
         try {
             const { title, description, year, isPublic, isCompleted, userId} = req.body
-            const task = await new Task({
+            const task: ITask = await new Task({
                 title,
                 description,
                 year,
@@ -92,4 +112,4 @@ class TaskController{
     }
 }
 
-export default new TaskController
+export default new TaskController()
