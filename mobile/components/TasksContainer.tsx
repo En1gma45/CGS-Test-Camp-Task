@@ -1,45 +1,63 @@
-import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, Button, ScrollView, SafeAreaView } from 'react-native';
+import React from 'react';
+import { View, StyleSheet, Button, ScrollView, SafeAreaView, Text } from 'react-native';
 import { useHistory } from 'react-router';
-import TaskItem from './TaskItem';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { ITask } from '../types/Post';
+import TaskItem from './TaskItem';
 import APIServices from '../services/HTTP.services'
 
+const getHandler = async () => {
+    try{
+        const {data} = await APIServices.get('/task')
+        return data
+    } catch(e) {
+        throw new Error('Smth went wrong')
+    }
+}
 
+const deleteHandler = async (id:string)=>{
+    try {
+        const response = await APIServices.delete(`/task/${id}`)
+        console.log(response.data);
+        getHandler()
+    } catch (error) {
+        console.log(error)
+    }
+}
 
 const TasksContainer = () => {
 
     const history = useHistory()
+    const queryClient = useQueryClient()
 
-    const [tasks, setTasks] = useState<any>([])
-    
-    useEffect( ()=>{
-        getHandler()
-    },[])
+    const { data, isLoading, isError } = useQuery<any>('getTasks', getHandler)
+    const { mutateAsync } = useMutation(deleteHandler)
 
-    const getHandler = async () => {
-        try{
-            const {data} = await APIServices.get('/task')
-            setTasks(data)
-        } catch(e) {
-            console.log(e)
-        }
+    const remove = async (id:string) => {
+        await mutateAsync(id)
+        queryClient.invalidateQueries('getTasks')
     }
 
-    const deleteHandler = async (id:string)=>{
-        try {
-            const response = await APIServices.delete(`/task/${id}`)
-            console.log(response.data);
-            getHandler()
-        } catch (error) {
-            console.log(error)
-        }
+    if(isLoading){
+        return (
+            <View>
+                <Text>Loading...</Text>
+            </View>
+        )
+    }
+
+    if(isError){
+        return (
+            <View>
+                <Text>Error</Text>
+            </View>
+        )
     }
 
     return (
         <SafeAreaView>
             <ScrollView >
-                {tasks.map((el: ITask)=>{
+                {data.map((el: ITask)=>{
                     return(
                         <View key={el._id} style={styles.container}>
                             <TaskItem {...el}/>
@@ -52,7 +70,7 @@ const TasksContainer = () => {
                                     })} />
                                 <Button
                                     title='Delete'
-                                    onPress={()=>deleteHandler(el._id)} />
+                                    onPress={()=>remove(el._id)} />
                             </View>
                         </View>
                     )

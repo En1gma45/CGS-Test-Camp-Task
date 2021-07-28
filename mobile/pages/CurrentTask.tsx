@@ -2,11 +2,21 @@ import React from 'react';
 import {View, StyleSheet, Button } from 'react-native';
 import { Formik } from 'formik';
 import { useHistory, useLocation } from 'react-router';
+import { useMutation } from 'react-query';
 import { TaskValidation } from '../validators/task.validator';
-import InputField from '../components/FormInput/InputField'
 import { ITask } from '../types/Post';
+import InputField from '../components/FormInput/InputField'
 import CheckBox from '../components/CheckBox/CheckBox';
 import APIServices from '../services/HTTP.services'
+
+const updateHandler = async (task: ITask) => {
+    try {
+        const { data } = await APIServices.update(`/task/${task._id}`, task)
+        console.log(data)
+    } catch (error) {
+        console.log(error)
+    }
+}
 
 const CurrentTask = () => {
 
@@ -21,21 +31,19 @@ const CurrentTask = () => {
         isCompleted: location.state.isCompleted
     }
     
-    const updateHandler = async (task: ITask) => {
-        try {
-            const { data } = await APIServices.update(`/task/${task._id}`, task)
-            console.log(data)
-            history.push('/tasks')
-        } catch (error) {
-            console.log(error)
-        }
+
+    const { mutateAsync } = useMutation(updateHandler)
+
+    const submit = async (data: ITask) => {
+        await mutateAsync(data)
+        history.push('/tasks')
     }
     
     return (
         <Formik
             initialValues={ initVal }
             onSubmit={ values => {
-                updateHandler(values)
+                submit(values)
 
             }}
             validationSchema={TaskValidation}

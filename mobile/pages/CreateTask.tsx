@@ -1,18 +1,27 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Formik } from 'formik';
 import { TaskValidation } from '../validators/task.validator';
-import {View, StyleSheet, TextInput, Button, Text} from 'react-native';
-import axios from 'axios';
-import CheckBox from '../components/CheckBox/CheckBox';
+import {View, StyleSheet, Button} from 'react-native';
+import { useMutation } from 'react-query';
 import { useHistory } from 'react-router';
 import { ITask } from '../types/Post';
+import CheckBox from '../components/CheckBox/CheckBox';
 import InputField from '../components/FormInput/InputField';
 import APIServices from '../services/HTTP.services'
 
 
+const createHandler = async (task: ITask) => {
+    try {
+        const {data} = await APIServices.post('/task/', task)
+        console.log(data)
+        
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 const CreateTask: React.FC = () => {
     const history = useHistory()
-
     const initVal: ITask = {
         _id: '',
         title: '',
@@ -22,23 +31,18 @@ const CreateTask: React.FC = () => {
         isCompleted: false
     }
 
+    const { mutateAsync } = useMutation(createHandler)
 
-    const createTask = async (task: ITask) => {
-        try {
-            const {data} = await APIServices.post('/task/', task)
-            console.log(data)
-            history.push('/tasks')
-        } catch (error) {
-            console.log(error)
-        }
-
+    const submit = async (data: ITask) => {
+        mutateAsync(data)
+        history.push('/tasks')
     }
 
     return (
         <Formik
             initialValues={ initVal }
             onSubmit={ values => {
-                createTask(values)
+                submit(values)
             }}
             validationSchema={TaskValidation}
         >
