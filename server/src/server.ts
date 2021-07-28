@@ -5,8 +5,12 @@ import connectDB from "../config/database";
 import user from "./routes/api/user";
 import profile from "./routes/api/profile";
 import task from "./routes/api/task";
+import morgan from 'morgan'
+
 
 const app = express();
+//const cors = require('cors')
+
 
 // Connect to MongoDB
 connectDB();
@@ -15,6 +19,8 @@ connectDB();
 app.set("port", process.env.PORT || 5000);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(morgan('combined'))
+//app.use(cors())
 
 // @route   GET /
 // @desc    Test Base API

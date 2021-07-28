@@ -1,5 +1,4 @@
 import { Router } from "express";
-import { check } from "express-validator/check";
 import TaskController from '../../controllers/task'
 import { TaskBodyValidator } from "../../validation/task.validation";
 
