@@ -6,7 +6,7 @@ import { TaskValidation } from '../validators/task.validator';
 import InputField from '../components/FormInput/InputField'
 import { ITask } from '../types/Post';
 import CheckBox from '../components/CheckBox/CheckBox';
-import APIServices from '../services/task.service'
+import APIServices from '../services/HTTP.services'
 
 const CurrentTask = () => {
 
@@ -23,7 +23,7 @@ const CurrentTask = () => {
     
     const updateHandler = async (task: ITask) => {
         try {
-            const { data } = await APIServices.updateData(`/task/${task._id}`, task)
+            const { data } = await APIServices.update(`/task/${task._id}`, task)
             console.log(data)
             history.push('/tasks')
         } catch (error) {

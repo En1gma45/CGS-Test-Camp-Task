@@ -3,7 +3,7 @@ import { View, StyleSheet, Button, ScrollView, SafeAreaView } from 'react-native
 import { useHistory } from 'react-router';
 import TaskItem from './TaskItem';
 import { ITask } from '../types/Post';
-import APIServices from '../services/task.service'
+import APIServices from '../services/HTTP.services'
 
 
 
@@ -19,7 +19,7 @@ const TasksContainer = () => {
 
     const getHandler = async () => {
         try{
-            const {data} = await APIServices.getData('/task')
+            const {data} = await APIServices.get('/task')
             setTasks(data)
         } catch(e) {
             console.log(e)
@@ -28,7 +28,7 @@ const TasksContainer = () => {
 
     const deleteHandler = async (id:string)=>{
         try {
-            const response = await APIServices.deleteData(`/task/${id}`)
+            const response = await APIServices.delete(`/task/${id}`)
             console.log(response.data);
             getHandler()
         } catch (error) {

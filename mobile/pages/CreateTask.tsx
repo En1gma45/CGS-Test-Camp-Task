@@ -7,7 +7,7 @@ import CheckBox from '../components/CheckBox/CheckBox';
 import { useHistory } from 'react-router';
 import { ITask } from '../types/Post';
 import InputField from '../components/FormInput/InputField';
-import APIServices from '../services/task.service'
+import APIServices from '../services/HTTP.services'
 
 
 const CreateTask: React.FC = () => {
@@ -25,7 +25,7 @@ const CreateTask: React.FC = () => {
 
     const createTask = async (task: ITask) => {
         try {
-            const {data} = await APIServices.postData('/task/', task)
+            const {data} = await APIServices.post('/task/', task)
             console.log(data)
             history.push('/tasks')
         } catch (error) {
