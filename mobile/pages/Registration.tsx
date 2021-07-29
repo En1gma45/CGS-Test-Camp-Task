@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, Button } from 'react-native';
+import { View, StyleSheet, Button, GestureResponderEvent } from 'react-native';
 import { Formik } from 'formik';
 import { RegisterValidation } from '../validators/register.validator'
 import { IRegister } from '../types/Registration';
@@ -14,10 +14,14 @@ const Registration = ({ navigation }: any) => {
         verifyPassword: ''
     }
 
+    const submitHandler = async (data: IRegister) => {
+        navigation.navigate('Tasks')
+    }
+
     return (
         <Formik
             initialValues={initVal}
-            onSubmit={() => navigation.navigate('Login') }
+            onSubmit={submitHandler}
             validationSchema={RegisterValidation}
         >
             {({ handleChange, handleBlur, handleSubmit, values }) => (
@@ -51,12 +55,12 @@ const Registration = ({ navigation }: any) => {
                         value={values.verifyPassword}
                 />
                 <Button
-                    onPress={handleSubmit}
+                    onPress={(handleSubmit as unknown) as (event: GestureResponderEvent) => void}
                     title="Register"
                 />
                 <Button 
                     title='Back to main'
-                    onPress={()=> navigation.navigate('Main')}
+                    onPress={onMainScreenNavigate => navigation.navigate('Main')}
                 />
             </View>
             )}

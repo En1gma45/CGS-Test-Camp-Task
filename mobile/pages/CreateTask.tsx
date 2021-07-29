@@ -1,7 +1,7 @@
 import React from 'react';
 import { Formik } from 'formik';
 import { TaskValidation } from '../validators/task.validator';
-import { View, StyleSheet, Button } from 'react-native';
+import { View, StyleSheet, Button, GestureResponderEvent } from 'react-native';
 import { useMutation } from 'react-query';
 import { ITask } from '../types/Post';
 import CheckBox from '../components/CheckBox/CheckBox';
@@ -34,64 +34,59 @@ const CreateTask: React.FC = () => {
 
     const { mutateAsync } = useMutation(createHandler)
 
-    const submit = async (data: ITask) => {
+    const submitHandler = async (data: ITask) => {
         await mutateAsync(data)
         navigation.navigate('Tasks')
     }
 
     return (
         <Formik
-            initialValues={ initVal }
-            onSubmit={ values => submit(values)}
+            initialValues={initVal}
+            onSubmit={submitHandler}
             validationSchema={TaskValidation}
         >
-            {({ handleChange, handleBlur, handleSubmit, values, setFieldValue }) => (
-                <View>
-                    <InputField
-                        name='title'
-                        style={styles.input}
-                        handleChange={handleChange}
-                        handleBlur={handleBlur}
-                        value={values.title}
-                    />
-                    <InputField
-                        name='description'
-                        style={styles.input}
-                        handleChange={handleChange}
-                        handleBlur={handleBlur}
-                        value={values.description}
-                    />
-                    <InputField
-                        name='year'
-                        style={styles.input}
-                        handleChange={handleChange}
-                        handleBlur={handleBlur}
-                        value={values.year.toString()}
-                    />
-                    <View style={styles.checkbox}>
-                        <CheckBox 
-                            isChecked={values.isPublic}
-                            onPress={() => setFieldValue('isPublic', !values.isPublic)}
-                            style={styles.checkbox}
-                            value={values.isPublic ? 'Public' : 'Private'}
-                        />
-                    </View>
-                        <CheckBox 
+            {({ handleChange, handleBlur, handleSubmit, values, setFieldValue }) => {
+                return (
+                    <View>
+                        <InputField
+                            name='title'
+                            style={styles.input}
+                            handleChange={handleChange}
+                            handleBlur={handleBlur}
+                            value={values.title} />
+                        <InputField
+                            name='description'
+                            style={styles.input}
+                            handleChange={handleChange}
+                            handleBlur={handleBlur}
+                            value={values.description} />
+                        <InputField
+                            name='year'
+                            style={styles.input}
+                            handleChange={handleChange}
+                            handleBlur={handleBlur}
+                            value={values.year.toString()} />
+                        <View style={styles.checkbox}>
+                            <CheckBox
+                                isChecked={values.isPublic}
+                                onPress={() => setFieldValue('isPublic', !values.isPublic)}
+                                style={styles.checkbox}
+                                value={values.isPublic ? 'Public' : 'Private'} />
+                        </View>
+                        <CheckBox
                             isChecked={values.isCompleted}
                             onPress={() => setFieldValue('isCompleted', !values.isCompleted)}
                             style={styles.checkbox}
-                            value={values.isCompleted ? 'Completed' : 'Not completed'}
-                        />
-                    <Button
-                        onPress={handleSubmit}
-                        title="Submit" 
-                    />
-                    <Button 
-                        title='Back to tasks'
-                        onPress={() => navigation.navigate('Tasks')}
-                    />
-                </View>
-            )}
+                            value={values.isCompleted ? 'Completed' : 'Not completed'} />
+                        <Button
+                            onPress={(handleSubmit as unknown) as (event: GestureResponderEvent) => void}
+                            title="Submit" />
+                        <Button
+                            title='Back to tasks'
+                            onPress={onTasksScreenNavigate => navigation.navigate('Tasks')} />
+                    </View>
+                );
+            }}
         </Formik>
     );
 }

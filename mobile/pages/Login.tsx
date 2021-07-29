@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, Button } from 'react-native';
+import { View, StyleSheet, Button, GestureResponderEvent } from 'react-native';
 import { Formik } from 'formik';
 import { UserValidation } from '../validators/user.validator'
 import { ILogin } from '../types/Login';
@@ -12,10 +12,14 @@ const Login: React.FC = ({ navigation }: any) => {
         password: ''
     }
 
+    const submitHandler = async (data: ILogin) => {
+        navigation.navigate('Tasks')
+    }
+
     return (
         <Formik
             initialValues={initVal}
-            onSubmit={() => navigation.navigate('Tasks')}
+            onSubmit={submitHandler}
             validationSchema={UserValidation}
         >
             {({ handleChange, handleBlur, handleSubmit, values }) => (
@@ -35,12 +39,12 @@ const Login: React.FC = ({ navigation }: any) => {
                             value={values.password}
                     />
                     <Button
-                        onPress={handleSubmit}
+                        onPress={(handleSubmit as unknown) as (event: GestureResponderEvent) => void}
                         title="Login" 
                     />
                     <Button 
                         title='Back to main'
-                        onPress={()=> navigation.navigate('Main')}
+                        onPress={onMainScreenNavigate => navigation.navigate('Main')}
                     />
                 </View>
             )}

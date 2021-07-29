@@ -8,10 +8,10 @@ const Main = ({ navigation }: any ) => {
         <View>
             <Button
                 title='Login'
-                onPress={() => navigation.navigate('Login')} />
+                onPress={onLoginScreenNavigate => navigation.navigate('Login')} />
             <Button
                 title='Registration'
-                onPress={() => navigation.navigate('Registration')} />
+                onPress={onRegistrationScreenNavigate => navigation.navigate('Registration')} />
         </View>
     )
 

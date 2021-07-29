@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, Button } from 'react-native';
+import { View, StyleSheet, Button, GestureResponderEvent } from 'react-native';
 import { Formik } from 'formik';
 import { useLocation } from 'react-router';
 import { useMutation } from 'react-query';
@@ -35,7 +35,7 @@ const CurrentTask = ({ route }: any) => {
 
     const { mutateAsync } = useMutation(updateHandler)
 
-    const submit = async (data: ITask) => {
+    const submitHandler = async (data: ITask) => {
         await mutateAsync(data)
         navigation.navigate('Tasks')
     }
@@ -43,7 +43,7 @@ const CurrentTask = ({ route }: any) => {
     return (
         <Formik
             initialValues={ initVal }
-            onSubmit={ values => submit(values)}
+            onSubmit={submitHandler}
             validationSchema={TaskValidation}
         >
             {({ handleChange, handleBlur, handleSubmit, values, setFieldValue }) => (
@@ -84,12 +84,12 @@ const CurrentTask = ({ route }: any) => {
                             value={values.isCompleted ? 'Completed' : 'Not completed'}
                         />
                     <Button
-                        onPress={handleSubmit}
+                        onPress={(handleSubmit as unknown) as (event: GestureResponderEvent) => void}
                         title="Submit" 
                     />
                     <Button 
                         title='Back to tasks'
-                        onPress={()=> navigation.navigate('Tasks')}
+                        onPress={onTasksScreenNavigate => navigation.navigate('Tasks')}
                     />
                 </View>
             )}

@@ -33,7 +33,7 @@ const TasksContainer = () => {
     const { data, isLoading, isError } = useQuery<any>('getTasks', getHandler)
     const { mutateAsync } = useMutation(deleteHandler)
 
-    const remove = async (id:string) => {
+    const removeHandler = async (id:string) => {
         await mutateAsync(id)
         queryClient.invalidateQueries('getTasks')
     }
@@ -63,14 +63,14 @@ const TasksContainer = () => {
     const renderItems: ListRenderItem<ITask> = ({ item }) => {
         return(
             <View>
-                <TaskItem { ...item }/>
-                <View style={ styles.buttonContainer }>
+                <TaskItem {...item }/>
+                <View style={styles.buttonContainer}>
                     <Button
                         title='Edit'
-                        onPress={ () => navigation.navigate('Edit', {...item})} />
+                        onPress={onEditScreenNavigate => navigation.navigate('Edit', {...item})} />
                     <Button
                         title='Delete'
-                        onPress={ () => remove(item._id)} />
+                        onPress={() => removeHandler(item._id)} />
                     </View>
             </View>
         )
@@ -80,7 +80,7 @@ const TasksContainer = () => {
         return (
             <Button
                 title='LogOut'
-                onPress={ () => navigation.navigate('Login')}
+                onPress={onLoginScreenNavigate => navigation.navigate('Login')}
             />
         )
     }
@@ -90,7 +90,7 @@ const TasksContainer = () => {
             <View style={ styles.createButton }>
                 <Button 
                     title='Create'
-                    onPress={() => navigation.navigate('Create')}/>
+                    onPress={onCreateScreenNavigate => navigation.navigate('Create')}/>
             </View>
         )
     }
