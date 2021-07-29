@@ -1,11 +1,11 @@
 import React from 'react';
-import {View, StyleSheet, Text, TextInput} from 'react-native';
+import { View, StyleSheet, Text, TextInput } from 'react-native';
 import { IInput } from './IInput';
 
 const InputField = ({ name, style, handleChange, handleBlur, value}: IInput) => {
     return (
         <View>
-            <Text style={{marginLeft:20}}>{name.replace(name[0], name[0].toUpperCase())}</Text>
+            <Text style={styles.text}>{name.replace(name[0], name[0].toUpperCase())}</Text>
             <TextInput
                 style={style}
                 onChangeText={handleChange(name)}
@@ -16,6 +16,10 @@ const InputField = ({ name, style, handleChange, handleBlur, value}: IInput) => 
     );
 }
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+    text: {
+        marginLeft:20
+    }
+})
 
 export default InputField;

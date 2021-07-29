@@ -1,13 +1,13 @@
 import React from 'react';
 import { Formik } from 'formik';
 import { TaskValidation } from '../validators/task.validator';
-import {View, StyleSheet, Button} from 'react-native';
+import { View, StyleSheet, Button } from 'react-native';
 import { useMutation } from 'react-query';
-import { useHistory } from 'react-router';
 import { ITask } from '../types/Post';
 import CheckBox from '../components/CheckBox/CheckBox';
 import InputField from '../components/FormInput/InputField';
 import APIServices from '../services/HTTP.services'
+import { useNavigation } from '@react-navigation/native';
 
 
 const createHandler = async (task: ITask) => {
@@ -21,7 +21,8 @@ const createHandler = async (task: ITask) => {
 }
 
 const CreateTask: React.FC = () => {
-    const history = useHistory()
+
+    const navigation = useNavigation()
     const initVal: ITask = {
         _id: '',
         title: '',
@@ -34,16 +35,14 @@ const CreateTask: React.FC = () => {
     const { mutateAsync } = useMutation(createHandler)
 
     const submit = async (data: ITask) => {
-        mutateAsync(data)
-        history.push('/tasks')
+        await mutateAsync(data)
+        navigation.navigate('Tasks')
     }
 
     return (
         <Formik
             initialValues={ initVal }
-            onSubmit={ values => {
-                submit(values)
-            }}
+            onSubmit={ values => submit(values)}
             validationSchema={TaskValidation}
         >
             {({ handleChange, handleBlur, handleSubmit, values, setFieldValue }) => (
@@ -72,14 +71,14 @@ const CreateTask: React.FC = () => {
                     <View style={styles.checkbox}>
                         <CheckBox 
                             isChecked={values.isPublic}
-                            onPress={()=>{setFieldValue('isPublic', !values.isPublic)}}
+                            onPress={() => setFieldValue('isPublic', !values.isPublic)}
                             style={styles.checkbox}
                             value={values.isPublic ? 'Public' : 'Private'}
                         />
                     </View>
                         <CheckBox 
                             isChecked={values.isCompleted}
-                            onPress={()=>{setFieldValue('isCompleted', !values.isCompleted)}}
+                            onPress={() => setFieldValue('isCompleted', !values.isCompleted)}
                             style={styles.checkbox}
                             value={values.isCompleted ? 'Completed' : 'Not completed'}
                         />
@@ -89,7 +88,7 @@ const CreateTask: React.FC = () => {
                     />
                     <Button 
                         title='Back to tasks'
-                        onPress={()=> history.push('/tasks')}
+                        onPress={() => navigation.navigate('Tasks')}
                     />
                 </View>
             )}

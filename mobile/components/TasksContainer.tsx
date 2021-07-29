@@ -1,21 +1,21 @@
-import React from 'react';
-import { View, StyleSheet, Button, ScrollView, SafeAreaView, Text } from 'react-native';
-import { useHistory } from 'react-router';
+import React, { useCallback } from 'react';
+import { View, StyleSheet, Button, SafeAreaView, Text, FlatList, ListRenderItem } from 'react-native';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { ITask } from '../types/Post';
 import TaskItem from './TaskItem';
 import APIServices from '../services/HTTP.services'
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 
 const getHandler = async () => {
     try{
-        const {data} = await APIServices.get('/task')
+        const { data } = await APIServices.get('/task')
         return data
     } catch(e) {
         throw new Error('Smth went wrong')
     }
 }
 
-const deleteHandler = async (id:string)=>{
+const deleteHandler = async ( id:string )=>{
     try {
         const response = await APIServices.delete(`/task/${id}`)
         console.log(response.data);
@@ -27,7 +27,7 @@ const deleteHandler = async (id:string)=>{
 
 const TasksContainer = () => {
 
-    const history = useHistory()
+    const navigation = useNavigation()
     const queryClient = useQueryClient()
 
     const { data, isLoading, isError } = useQuery<any>('getTasks', getHandler)
@@ -37,6 +37,12 @@ const TasksContainer = () => {
         await mutateAsync(id)
         queryClient.invalidateQueries('getTasks')
     }
+
+    useFocusEffect(
+        useCallback(() => {
+            queryClient.invalidateQueries('getTasks')
+        }, [])
+    )
 
     if(isLoading){
         return (
@@ -54,50 +60,63 @@ const TasksContainer = () => {
         )
     }
 
+    const renderItems: ListRenderItem<ITask> = ({ item }) => {
+        return(
+            <View>
+                <TaskItem { ...item }/>
+                <View style={ styles.buttonContainer }>
+                    <Button
+                        title='Edit'
+                        onPress={ () => navigation.navigate('Edit', {...item})} />
+                    <Button
+                        title='Delete'
+                        onPress={ () => remove(item._id)} />
+                    </View>
+            </View>
+        )
+    }
+
+    const listFooter = () => {
+        return (
+            <Button
+                title='LogOut'
+                onPress={ () => navigation.navigate('Login')}
+            />
+        )
+    }
+
+    const listHeader = () => {
+        return (
+            <View style={ styles.createButton }>
+                <Button 
+                    title='Create'
+                    onPress={() => navigation.navigate('Create')}/>
+            </View>
+        )
+    }
+
     return (
         <SafeAreaView>
-            <ScrollView >
-                {data.map((el: ITask)=>{
-                    return(
-                        <View key={el._id} style={styles.container}>
-                            <TaskItem {...el}/>
-                            <View style={styles.buttonContainer}>
-                                <Button
-                                    title='Edit'
-                                    onPress={()=>history.push({
-                                        pathname: `/tasks/${el._id}`,
-                                        state: {...el}
-                                    })} />
-                                <Button
-                                    title='Delete'
-                                    onPress={()=>remove(el._id)} />
-                            </View>
-                        </View>
-                    )
-                })}
-                <Button
-                    title='LogOut'
-                    onPress={()=>history.push('/')}
-                />
-                <View style={styles.footer}></View>
-            </ScrollView>
+            <FlatList
+                data = {data}
+                renderItem = {renderItems}
+                keyExtractor = {item => item._id}
+                ListFooterComponent = {listFooter}
+                ListHeaderComponent = {listHeader}
+                stickyHeaderIndices={[0]}
+            />
         </SafeAreaView>
     );
 }
 
 const styles = StyleSheet.create({
-    container:{
-        display: 'flex',
-        flex: 1,
-    },
-    buttonContainer:{
-        display: 'flex',
+    buttonContainer: {
         justifyContent: 'center',
-        padding: 50
+        padding: 25,
     },
-    footer:{
-        height:200
-    }
+    createButton: {
+        height:50
+    },
 })
 
 export default TasksContainer;

@@ -3,7 +3,7 @@ import { Text, View, StyleSheet } from 'react-native';
 import { ITask } from '../types/Post';
 
 
-const TaskItem = ( {title, description, year, isPublic, isCompleted}: ITask) => {
+const TaskItem = ({ title, description, year, isPublic, isCompleted }: ITask ) => {
     return (
         <View style={styles.taskContainer}>
             <View style={styles.infoContainer}>
@@ -11,8 +11,8 @@ const TaskItem = ( {title, description, year, isPublic, isCompleted}: ITask) => 
                 <Text>{description}</Text>
                 <Text>{year}</Text>
                 <View style={styles.additionalInfo}>
-                    <Text style={{marginRight: 30}}>{isCompleted ? 'Completed': 'Not completed'}</Text>
-                    <Text style={{marginLeft: 30}}>{isPublic ? 'Public' : 'Private'}</Text>
+                    <Text style={styles.text}>{isCompleted ? 'Completed': 'Not completed'}</Text>
+                    <Text style={styles.text}>{isPublic ? 'Public' : 'Private'}</Text>
                 </View>
             </View>
             
@@ -22,7 +22,6 @@ const TaskItem = ( {title, description, year, isPublic, isCompleted}: ITask) => 
 
 const styles = StyleSheet.create({
     taskContainer:{
-        display:'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
         margin: 20,
@@ -41,6 +40,9 @@ const styles = StyleSheet.create({
         display: 'flex',
         justifyContent: 'space-between'
     },
+    text: {
+        marginRight: 30
+    }
 })
 
 export default TaskItem;

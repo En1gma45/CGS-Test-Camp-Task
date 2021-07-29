@@ -1,11 +1,11 @@
 import React from 'react';
-import {View, StyleSheet, Button, Text, TextInput} from 'react-native';
+import { View, StyleSheet, Button } from 'react-native';
 import { Formik } from 'formik';
 import { RegisterValidation } from '../validators/register.validator'
 import { IRegister } from '../types/Registration';
 import InputField from '../components/FormInput/InputField';
 
-const Registration = ({ history }: any) => {
+const Registration = ({ navigation }: any) => {
 
     const initVal: IRegister = {
         username: '',
@@ -17,7 +17,7 @@ const Registration = ({ history }: any) => {
     return (
         <Formik
             initialValues={initVal}
-            onSubmit={()=> {history.push('/tasks')}}
+            onSubmit={() => navigation.navigate('Login') }
             validationSchema={RegisterValidation}
         >
             {({ handleChange, handleBlur, handleSubmit, values }) => (
@@ -56,7 +56,7 @@ const Registration = ({ history }: any) => {
                 />
                 <Button 
                     title='Back to main'
-                    onPress={()=> history.push('/')}
+                    onPress={()=> navigation.navigate('Main')}
                 />
             </View>
             )}

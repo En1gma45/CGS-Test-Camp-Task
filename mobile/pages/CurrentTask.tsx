@@ -1,13 +1,14 @@
 import React from 'react';
-import {View, StyleSheet, Button } from 'react-native';
+import { View, StyleSheet, Button } from 'react-native';
 import { Formik } from 'formik';
-import { useHistory, useLocation } from 'react-router';
+import { useLocation } from 'react-router';
 import { useMutation } from 'react-query';
 import { TaskValidation } from '../validators/task.validator';
 import { ITask } from '../types/Post';
 import InputField from '../components/FormInput/InputField'
 import CheckBox from '../components/CheckBox/CheckBox';
 import APIServices from '../services/HTTP.services'
+import { useNavigation } from '@react-navigation/native';
 
 const updateHandler = async (task: ITask) => {
     try {
@@ -18,17 +19,17 @@ const updateHandler = async (task: ITask) => {
     }
 }
 
-const CurrentTask = () => {
+const CurrentTask = ({ route }: any) => {
 
-    const location = useLocation<any>()
-    const history = useHistory()
+    const { params } = route
+    const navigation = useNavigation()
     const initVal: ITask = {
-        _id: location.state._id,
-        title: location.state.title,
-        description: location.state.description,
-        year: location.state.year,
-        isPublic: location.state.isPublic,
-        isCompleted: location.state.isCompleted
+        _id: params._id,
+        title: params.title,
+        description: params.description,
+        year: params.year,
+        isPublic: params.isPublic,
+        isCompleted: params.isCompleted
     }
     
 
@@ -36,16 +37,13 @@ const CurrentTask = () => {
 
     const submit = async (data: ITask) => {
         await mutateAsync(data)
-        history.push('/tasks')
+        navigation.navigate('Tasks')
     }
     
     return (
         <Formik
             initialValues={ initVal }
-            onSubmit={ values => {
-                submit(values)
-
-            }}
+            onSubmit={ values => submit(values)}
             validationSchema={TaskValidation}
         >
             {({ handleChange, handleBlur, handleSubmit, values, setFieldValue }) => (
@@ -74,14 +72,14 @@ const CurrentTask = () => {
                     <View style={styles.checkbox}>
                         <CheckBox 
                             isChecked={values.isPublic}
-                            onPress={()=>{setFieldValue('isPublic', !values.isPublic)}}
+                            onPress={() => setFieldValue('isPublic', !values.isPublic)}
                             style={styles.checkbox}
                             value={values.isPublic ? 'Public' : 'Private'}
                         />
                     </View>
                         <CheckBox 
                             isChecked={values.isCompleted}
-                            onPress={()=>{setFieldValue('isCompleted', !values.isCompleted)}}
+                            onPress={() => setFieldValue('isCompleted', !values.isCompleted)}
                             style={styles.checkbox}
                             value={values.isCompleted ? 'Completed' : 'Not completed'}
                         />
@@ -91,7 +89,7 @@ const CurrentTask = () => {
                     />
                     <Button 
                         title='Back to tasks'
-                        onPress={()=> history.push('/tasks')}
+                        onPress={()=> navigation.navigate('Tasks')}
                     />
                 </View>
             )}

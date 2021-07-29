@@ -10,7 +10,7 @@ interface CheckBoxProps {
     onPress: () => void
 }
 
-const CheckBox = (props: CheckBoxProps) => {
+const CheckBox = ( props: CheckBoxProps ) => {
     const {onPress, isChecked} = props
     const name = isChecked ? 'checkbox-marked-outline' : 'checkbox-blank-outline'
 

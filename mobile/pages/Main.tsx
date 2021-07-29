@@ -1,17 +1,17 @@
 import React from 'react';
-import {View, StyleSheet, Button} from 'react-native';
+import { View, StyleSheet, Button } from 'react-native';
 
 
 
-const Main = ({ history }:any) => {
+const Main = ({ navigation }: any ) => {
     return( 
         <View>
             <Button
                 title='Login'
-                onPress={()=>history.push('/login')} />
+                onPress={() => navigation.navigate('Login')} />
             <Button
                 title='Registration'
-                onPress={()=>history.push('/registration')} />
+                onPress={() => navigation.navigate('Registration')} />
         </View>
     )
 
