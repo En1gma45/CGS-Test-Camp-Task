@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { View, StyleSheet, Button, GestureResponderEvent } from 'react-native';
 import { Formik } from 'formik';
-import { useLocation } from 'react-router';
 import { useMutation } from 'react-query';
 import { TaskValidation } from '../validators/task.validator';
 import { ITask } from '../types/Post';
@@ -9,6 +8,7 @@ import InputField from '../components/FormInput/InputField'
 import CheckBox from '../components/CheckBox/CheckBox';
 import APIServices from '../services/HTTP.services'
 import { useNavigation } from '@react-navigation/native';
+import { AuthContext } from '../context/AuthContext';
 
 const updateHandler = async (task: ITask) => {
     try {
@@ -21,6 +21,9 @@ const updateHandler = async (task: ITask) => {
 
 const CurrentTask = ({ route }: any) => {
 
+    const { userData } = useContext(AuthContext)
+    const { userId } = userData!
+
     const { params } = route
     const navigation = useNavigation()
     const initVal: ITask = {
@@ -29,7 +32,8 @@ const CurrentTask = ({ route }: any) => {
         description: params.description,
         year: params.year,
         isPublic: params.isPublic,
-        isCompleted: params.isCompleted
+        isCompleted: params.isCompleted,
+        owner: userId
     }
     
 

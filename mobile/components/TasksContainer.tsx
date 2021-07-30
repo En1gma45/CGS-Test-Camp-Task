@@ -87,7 +87,7 @@ const TasksContainer = () => {
     const listFooter = () => {
         return (
             <Button
-                title='LogOut'
+                title='Main'
                 onPress={onLoginScreenNavigate => navigation.navigate('Main')}
             />
         )
