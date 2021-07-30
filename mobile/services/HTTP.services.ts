@@ -1,6 +1,5 @@
 import axios, {AxiosInstance} from 'axios'
 
-
 class APIServices {
 
     baseUrl: string
@@ -17,8 +16,8 @@ class APIServices {
         return `${this.baseUrl}/${this.apiVersion}${endpoint}`
     }
 
-    get(endpoint: string){
-        return this.fetchingService.get(this.getFullApiUrl(endpoint))
+    get(endpoint: string, config: Array<string>){
+        return this.fetchingService.get(`${this.getFullApiUrl(endpoint)}?${config.join('')}`)
     }
 
     post(endpoint: string, data: object){

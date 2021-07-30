@@ -6,4 +6,5 @@ export interface ITask {
     year: number;
     isPublic:boolean;
     isCompleted:boolean;
+    owner: string
 }

@@ -8,6 +8,7 @@ import { Schema, model, Model, Document, Types } from 'mongoose';
  * @param year:number
  * @param public:boolean
  * @param completed:boolean
+ * @param owner:Types.ObjectId
  */
 
 export interface ITask extends Document {
@@ -16,7 +17,7 @@ export interface ITask extends Document {
     year: number;
     isPublic:boolean;
     isCompleted:boolean;
-    owner: {type: Types.ObjectId, ref: 'User'}
+    owner: Types.ObjectId
 }
 
 const TaskSchema: Schema = new Schema({
@@ -39,6 +40,10 @@ const TaskSchema: Schema = new Schema({
     isCompleted: {
         type: Boolean,
         required: true
+    },
+    owner: {
+        type: Types.ObjectId,
+        ref: 'User'
     }
     
 })

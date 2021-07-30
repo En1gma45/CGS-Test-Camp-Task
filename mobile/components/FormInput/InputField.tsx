@@ -8,6 +8,7 @@ const InputField = ({ name, style, handleChange, handleBlur, value}: IInput) => 
             <Text style={styles.text}>{name.replace(name[0], name[0].toUpperCase())}</Text>
             <TextInput
                 style={style}
+                secureTextEntry={name==='password' ? true : false}
                 onChangeText={handleChange(name)}
                 onBlur={handleBlur(name)}
                 value={value}

@@ -4,6 +4,17 @@ import { Formik } from 'formik';
 import { RegisterValidation } from '../validators/register.validator'
 import { IRegister } from '../types/Registration';
 import InputField from '../components/FormInput/InputField';
+import APIServices from '../services/HTTP.services'
+
+
+const registrationHandler = async (data: IRegister) => {
+    try {
+        const response = await APIServices.post('/user/registration', data)
+        console.log(response.data)
+    } catch (error) {
+        throw new Error(`Smth went wrong: ${error}`)
+    }
+}
 
 const Registration = ({ navigation }: any) => {
 
@@ -15,7 +26,12 @@ const Registration = ({ navigation }: any) => {
     }
 
     const submitHandler = async (data: IRegister) => {
-        navigation.navigate('Tasks')
+        registrationHandler(data)
+        .then(navigation.navigate('Login'))
+        .catch((e) => {
+            throw new Error(`Smth went wrong: ${e.msg}`)
+        })
+        
     }
 
     return (
@@ -59,8 +75,8 @@ const Registration = ({ navigation }: any) => {
                     title="Register"
                 />
                 <Button 
-                    title='Back to main'
-                    onPress={onMainScreenNavigate => navigation.navigate('Main')}
+                    title='Login'
+                    onPress={onMainScreenNavigate => navigation.navigate('Login')}
                 />
             </View>
             )}

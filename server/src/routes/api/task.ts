@@ -6,9 +6,8 @@ import { TaskBodyValidator } from "../../validation/task.validation";
 const router: Router = Router()
 
 router.get('/', TaskController.find)
-router.get('/:id', TaskController.findCurrentTask)
-router.post('/', TaskBodyValidator, TaskController.create)
+router.post('/', TaskBodyValidator,TaskBodyValidator, TaskController.create)
 router.delete('/:id', TaskController.delete)
-router.put('/:id', TaskBodyValidator, TaskController.update)
+router.put('/:id', TaskBodyValidator,TaskBodyValidator, TaskController.update)
 
 export default router

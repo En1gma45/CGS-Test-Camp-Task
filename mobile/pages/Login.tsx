@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { View, StyleSheet, Button, GestureResponderEvent } from 'react-native';
 import { Formik } from 'formik';
 import { UserValidation } from '../validators/user.validator'
 import { ILogin } from '../types/Login';
 import InputField from '../components/FormInput/InputField';
+import APIServices from '../services/HTTP.services'
+import { useMutation } from 'react-query';
+import { AuthContext } from '../context/AuthContext';
 
 
 const Login: React.FC = ({ navigation }: any) => {
@@ -11,9 +14,26 @@ const Login: React.FC = ({ navigation }: any) => {
         email: '',
         password: ''
     }
+    const { login } = useContext(AuthContext);
+
+    const loginHandler = async (data: ILogin) => {
+        try {
+            const response = await APIServices.post('/user/login', data)
+            login(response.data.token, response.data.userId)
+        } catch (error) {
+            throw new Error(`Smth went wrong: ${error}`)
+        }
+    }
+
+    const { mutateAsync } = useMutation(loginHandler)
 
     const submitHandler = async (data: ILogin) => {
-        navigation.navigate('Tasks')
+        try{
+            await loginHandler(data)
+            navigation.navigate('Tasks')
+        }catch(e){
+            throw new Error(`${e}`)
+        }
     }
 
     return (
@@ -43,8 +63,8 @@ const Login: React.FC = ({ navigation }: any) => {
                         title="Login" 
                     />
                     <Button 
-                        title='Back to main'
-                        onPress={onMainScreenNavigate => navigation.navigate('Main')}
+                        title='Create new account'
+                        onPress={onMainScreenNavigate => navigation.navigate('Registration')}
                     />
                 </View>
             )}

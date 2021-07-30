@@ -9,24 +9,31 @@ import Main from './pages/Main';
 import CurrentTask from './pages/CurrentTask';
 import CreateTask from './pages/CreateTask';
 import { NavigationContainer } from '@react-navigation/native';
+import { AuthContext } from './context/AuthContext';
+import { useAuth } from './hooks/auth.hook';
 
 const queryClient = new QueryClient()
 const Stack = createStackNavigator()
 
 export default function App() {
+
+  const { login, logout, userData } = useAuth()
+
   return (
-    <NavigationContainer>
-      <QueryClientProvider client={queryClient}>
-        <Stack.Navigator>
-          <Stack.Screen name='Main' component={Main} />
-          <Stack.Screen name='Login' component={Login} />
-          <Stack.Screen name='Registration' component={Registration} />
-          <Stack.Screen name='Tasks' component={TaskList} />
-          <Stack.Screen name='Edit' component={CurrentTask} />
-          <Stack.Screen name='Create' component={CreateTask} />
-        </Stack.Navigator>
-      </QueryClientProvider>
-    </NavigationContainer>
+    <AuthContext.Provider value={{ login, logout, userData }}>
+      <NavigationContainer>
+        <QueryClientProvider client={queryClient}>
+          <Stack.Navigator>
+            <Stack.Screen name='Main' component={Main} />
+            <Stack.Screen name='Login' component={Login} />
+            <Stack.Screen name='Registration' component={Registration} />
+            <Stack.Screen name='Tasks' component={TaskList} />
+            <Stack.Screen name='Edit' component={CurrentTask} />
+            <Stack.Screen name='Create' component={CreateTask} />
+          </Stack.Navigator>
+        </QueryClientProvider>
+      </NavigationContainer>
+    </AuthContext.Provider>
   );
 }
 

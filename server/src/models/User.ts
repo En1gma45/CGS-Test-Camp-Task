@@ -1,15 +1,18 @@
-import { Document, Model, model, Schema } from "mongoose";
+import { Document, Model, model, Schema, Types } from "mongoose";
 
 /**
  * Interface to model the User Schema for TypeScript.
  * @param email:string
  * @param password:string
- * @param avatar:string
+ * @param tasks:[{ type: Types.ObjectId }]
  */
 export interface IUser extends Document {
   email: string;
   password: string;
-  avatar: string;
+  tasks: [{
+    type: Types.ObjectId,
+    ref: 'Task'
+  }]
 }
 
 const userSchema: Schema = new Schema({
@@ -22,9 +25,10 @@ const userSchema: Schema = new Schema({
     type: String,
     required: true
   },
-  avatar: {
-    type: String
-  },
+  tasks: [{
+    type: Types.ObjectId,
+    ref: 'Task'
+  }],
   date: {
     type: Date,
     default: Date.now

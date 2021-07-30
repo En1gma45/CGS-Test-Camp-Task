@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Formik } from 'formik';
 import { TaskValidation } from '../validators/task.validator';
 import { View, StyleSheet, Button, GestureResponderEvent } from 'react-native';
@@ -8,6 +8,7 @@ import CheckBox from '../components/CheckBox/CheckBox';
 import InputField from '../components/FormInput/InputField';
 import APIServices from '../services/HTTP.services'
 import { useNavigation } from '@react-navigation/native';
+import { AuthContext } from '../context/AuthContext';
 
 
 const createHandler = async (task: ITask) => {
@@ -22,6 +23,10 @@ const createHandler = async (task: ITask) => {
 
 const CreateTask: React.FC = () => {
 
+    const { userData } = useContext(AuthContext)
+    const { userId } = userData!
+    console.log(userId)
+    
     const navigation = useNavigation()
     const initVal: ITask = {
         _id: '',
@@ -29,7 +34,8 @@ const CreateTask: React.FC = () => {
         description: '',
         year: new Date(Date.now()).getFullYear(),
         isPublic: false,
-        isCompleted: false
+        isCompleted: false,
+        owner: userId
     }
 
     const { mutateAsync } = useMutation(createHandler)

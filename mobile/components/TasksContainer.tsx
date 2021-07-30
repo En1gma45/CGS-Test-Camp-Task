@@ -1,34 +1,42 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useContext } from 'react';
 import { View, StyleSheet, Button, SafeAreaView, Text, FlatList, ListRenderItem } from 'react-native';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { ITask } from '../types/Post';
 import TaskItem from './TaskItem';
 import APIServices from '../services/HTTP.services'
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import { AuthContext } from '../context/AuthContext';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const getHandler = async () => {
-    try{
-        const { data } = await APIServices.get('/task')
-        return data
-    } catch(e) {
-        throw new Error('Smth went wrong')
-    }
-}
 
-const deleteHandler = async ( id:string )=>{
-    try {
-        const response = await APIServices.delete(`/task/${id}`)
-        console.log(response.data);
-        getHandler()
-    } catch (error) {
-        console.log(error)
-    }
-}
 
 const TasksContainer = () => {
 
     const navigation = useNavigation()
     const queryClient = useQueryClient()
+    const { userData } = useContext(AuthContext)
+    const { userId } = userData!
+
+    const getHandler = useCallback(async () => {
+        try{
+            //AsyncStorage.getItem('UserData').then(res => console.log(res))
+            const { data } = await APIServices.get('/task', [`userId=${userId}`])
+            return data
+        } catch(e) {
+            throw new Error('Smth went wrong')
+        }
+    }, [userId])
+
+    const deleteHandler = async ( id:string )=>{
+        try {
+            const response = await APIServices.delete(`/task/${id}`)
+            console.log(response.data);
+            getHandler()
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
 
     const { data, isLoading, isError } = useQuery<any>('getTasks', getHandler)
     const { mutateAsync } = useMutation(deleteHandler)
@@ -80,7 +88,7 @@ const TasksContainer = () => {
         return (
             <Button
                 title='LogOut'
-                onPress={onLoginScreenNavigate => navigation.navigate('Login')}
+                onPress={onLoginScreenNavigate => navigation.navigate('Main')}
             />
         )
     }

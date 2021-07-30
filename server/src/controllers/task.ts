@@ -1,4 +1,5 @@
 import { Response } from 'express';
+import { ObjectId, Types } from 'mongoose'
 import HttpStatusCodes from 'http-status-codes';
 import { validationResult } from "express-validator/check";
 import Task, { ITask } from '../models/Task';
@@ -8,28 +9,8 @@ class TaskController{
     //fetch all tasks
     async find(req: Request, res: Response){
         try {
-            const { userId } = req.body
-            const tasks: Array<ITask> = await Task.find()
-            if (!tasks) {
-                return res.status(HttpStatusCodes.BAD_REQUEST).json({
-                    errors: [
-                        {
-                            msg: "There is no tasks for this user",
-                        },
-                    ],
-                });
-            }
-            res.json(tasks);
-          } catch (err) {
-            console.error(err.message);
-            res.status(HttpStatusCodes.INTERNAL_SERVER_ERROR).send("Server Error");
-          }
-    }
-
-    //fetch current task
-    async findCurrentTask(req: Request, res: Response){
-        try {
-            const tasks: ITask = await Task.findById({_id: req.params.id })
+            const userId = req.query.userId as string
+            const tasks: Array<ITask> = await Task.find({ owner: userId })
             if (!tasks) {
                 return res.status(HttpStatusCodes.BAD_REQUEST).json({
                     errors: [
@@ -55,16 +36,19 @@ class TaskController{
             .json({ errors: errors.array() });
         }
         try {
-            const { title, description, year, isPublic, isCompleted, userId} = req.body
-            const task: ITask = await new Task({
+            const { title, description, year, isPublic, isCompleted, owner } = req.body
+            const task: ITask = new Task({
                 title,
                 description,
                 year,
                 isPublic,
                 isCompleted,
-                owner: userId
+                owner
             })
-            task.save()
+
+            console.log(owner);
+            
+            await task.save()
             res.json(task)
                 
         } catch (err) {
