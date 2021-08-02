@@ -29,7 +29,7 @@ const Login: React.FC = ({ navigation }: any) => {
 
     const submitHandler = async (data: ILogin) => {
         try{
-            await loginHandler(data)
+            await mutateAsync(data)
             navigation.navigate('Tasks')
         }catch(e){
             throw new Error(`${e}`)

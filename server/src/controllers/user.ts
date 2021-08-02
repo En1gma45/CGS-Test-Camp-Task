@@ -6,6 +6,7 @@ import Payload from "../types/Payload";
 import HttpStatusCodes from 'http-status-codes';
 import User, {IUser} from '../models/User'
 import { validationResult } from 'express-validator/check';
+import signJWT from "../helpers/signJWT";
 
 class UserController {
     //login
@@ -23,7 +24,7 @@ class UserController {
 
             if(!user){
                 return res
-                  .status(HttpStatusCodes.BAD_REQUEST)
+                  .status(HttpStatusCodes.UNAUTHORIZED)
                   .json({ msg: "User is not exist" });
             }
 
@@ -31,20 +32,18 @@ class UserController {
             
             if(!unHashedPassword){
                 return res
-                  .status(HttpStatusCodes.BAD_REQUEST)
-                  .json({ msg: "User is not exist" });
+                  .status(HttpStatusCodes.UNAUTHORIZED)
+                  .json({ msg: "Password is invalid" });
             }
 
-            const jwtSecret = 'SECRET'
-
-            const token = jwt.sign(
-                { userId: user.id },
-                jwtSecret,
-                { expiresIn: '1h' }
-            )
-
-            res.json({ token, userId: user.id })
-
+            signJWT(user._id, (error, token) => {
+                if(error){
+                    return res
+                        .status(HttpStatusCodes.UNAUTHORIZED)
+                        .json({ msg: "User is not exist" });
+                }
+                res.json({ token, userId: user._id })
+            })
         } catch (error) {
             console.error(error.message);
             res.status(HttpStatusCodes.INTERNAL_SERVER_ERROR).send("Server Error");

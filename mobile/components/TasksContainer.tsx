@@ -1,5 +1,5 @@
 import React, { useCallback, useContext } from 'react';
-import { View, StyleSheet, Button, SafeAreaView, Text, FlatList, ListRenderItem } from 'react-native';
+import { View, StyleSheet, Button, SafeAreaView, Text, FlatList, ListRenderItem, ActivityIndicator } from 'react-native';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { ITask } from '../types/Post';
 import TaskItem from './TaskItem';
@@ -7,6 +7,7 @@ import APIServices from '../services/HTTP.services'
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { AuthContext } from '../context/AuthContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
 
 
 
@@ -15,21 +16,30 @@ const TasksContainer = () => {
     const navigation = useNavigation()
     const queryClient = useQueryClient()
     const { userData } = useContext(AuthContext)
-    const { userId } = userData!
+    const { token, userId } = userData!
 
     const getHandler = useCallback(async () => {
         try{
             //AsyncStorage.getItem('UserData').then(res => console.log(res))
-            const { data } = await APIServices.get('/task', [`userId=${userId}`])
+            const { data } = await APIServices.get('/task', "",{
+                headers: {
+                    authorization: `Bearer ${token}`,
+                }
+            })
+            console.log(data)
             return data
         } catch(e) {
-            throw new Error('Smth went wrong')
+            throw new Error(`Smth went wrong: ${e}`)
         }
-    }, [userId])
+    }, [token])
 
     const deleteHandler = async ( id:string )=>{
         try {
-            const response = await APIServices.delete(`/task/${id}`)
+            const response = await APIServices.delete(`/task/${id}`,{
+                headers: {
+                    authorization: `Bearer ${token}`,
+                }
+            })
             console.log(response.data);
             getHandler()
         } catch (error) {
@@ -52,13 +62,13 @@ const TasksContainer = () => {
         }, [])
     )
 
-    if(isLoading){
+    /*if(isLoading){
         return (
             <View>
-                <Text>Loading...</Text>
+                <ActivityIndicator />
             </View>
         )
-    }
+    }*/
 
     if(isError){
         return (
@@ -106,7 +116,7 @@ const TasksContainer = () => {
     return (
         <SafeAreaView>
             <FlatList
-                data = {data}
+                data = {data.tasks}
                 renderItem = {renderItems}
                 keyExtractor = {item => item._id}
                 ListFooterComponent = {listFooter}

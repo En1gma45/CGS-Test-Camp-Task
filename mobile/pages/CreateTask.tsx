@@ -11,20 +11,10 @@ import { useNavigation } from '@react-navigation/native';
 import { AuthContext } from '../context/AuthContext';
 
 
-const createHandler = async (task: ITask) => {
-    try {
-        const {data} = await APIServices.post('/task/', task)
-        console.log(data)
-        
-    } catch (error) {
-        console.log(error)
-    }
-}
-
 const CreateTask: React.FC = () => {
 
     const { userData } = useContext(AuthContext)
-    const { userId } = userData!
+    const { token, userId } = userData!
     console.log(userId)
     
     const navigation = useNavigation()
@@ -36,6 +26,20 @@ const CreateTask: React.FC = () => {
         isPublic: false,
         isCompleted: false,
         owner: userId
+    }
+
+    const createHandler = async (task: ITask) => {
+        try {
+            const {data} = await APIServices.post('/task/', task, {
+                headers: {
+                    authorization: `Bearer ${token}`,
+                }
+            })
+            console.log(data)
+            
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     const { mutateAsync } = useMutation(createHandler)

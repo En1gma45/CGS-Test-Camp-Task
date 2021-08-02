@@ -16,20 +16,20 @@ class APIServices {
         return `${this.baseUrl}/${this.apiVersion}${endpoint}`
     }
 
-    get(endpoint: string, config: Array<string>){
-        return this.fetchingService.get(`${this.getFullApiUrl(endpoint)}?${config.join('')}`)
+    get(endpoint: string, config?:string, headers?: object){
+        return this.fetchingService.get(`${this.getFullApiUrl(endpoint)}`, headers)
     }
 
-    post(endpoint: string, data: object){
-        return this.fetchingService.post(this.getFullApiUrl(endpoint), data)
+    post(endpoint: string, data: object, headers?: object){
+        return this.fetchingService.post(this.getFullApiUrl(endpoint), data, headers)
     }
 
-    update(endpoint: string, data: object) {
-        return this.fetchingService.put(this.getFullApiUrl(endpoint), data)
+    update(endpoint: string, data: object, headers?: object) {
+        return this.fetchingService.put(this.getFullApiUrl(endpoint), data, headers)
     }
     
-    delete(endpoint: string) {
-        return this.fetchingService.delete(this.getFullApiUrl(endpoint))
+    delete(endpoint: string, headers?: object) {
+        return this.fetchingService.delete(this.getFullApiUrl(endpoint), headers)
     }
 
 }

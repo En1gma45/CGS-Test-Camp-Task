@@ -1,5 +1,4 @@
 import { Response } from 'express';
-import { ObjectId, Types } from 'mongoose'
 import HttpStatusCodes from 'http-status-codes';
 import { validationResult } from "express-validator/check";
 import Task, { ITask } from '../models/Task';
@@ -9,8 +8,21 @@ class TaskController{
     //fetch all tasks
     async find(req: Request, res: Response){
         try {
-            const userId = req.query.userId as string
-            const tasks: Array<ITask> = await Task.find({ owner: userId })
+            
+            let { page, size } = req.query
+            if(!page){
+                page = '1'
+            }
+            if(!size){
+                size = '5'
+            }
+
+            const limit = parseInt(size as string)
+            const skip = (parseInt(page as string) - 1) * parseInt(size as string)
+
+
+            const userId = res.locals.userId
+            const tasks: Array<ITask> = await Task.find({ owner: userId}).limit(limit).skip(skip)
             if (!tasks) {
                 return res.status(HttpStatusCodes.BAD_REQUEST).json({
                     errors: [
@@ -20,7 +32,11 @@ class TaskController{
                     ],
                 });
             }
-            res.json(tasks);
+            res.json({
+                page,
+                size,
+                tasks
+            });
           } catch (err) {
             console.error(err.message);
             res.status(HttpStatusCodes.INTERNAL_SERVER_ERROR).send("Server Error");

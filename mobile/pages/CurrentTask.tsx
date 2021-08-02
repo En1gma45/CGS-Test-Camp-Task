@@ -10,19 +10,12 @@ import APIServices from '../services/HTTP.services'
 import { useNavigation } from '@react-navigation/native';
 import { AuthContext } from '../context/AuthContext';
 
-const updateHandler = async (task: ITask) => {
-    try {
-        const { data } = await APIServices.update(`/task/${task._id}`, task)
-        console.log(data)
-    } catch (error) {
-        console.log(error)
-    }
-}
+
 
 const CurrentTask = ({ route }: any) => {
 
     const { userData } = useContext(AuthContext)
-    const { userId } = userData!
+    const { token, userId } = userData!
 
     const { params } = route
     const navigation = useNavigation()
@@ -34,6 +27,19 @@ const CurrentTask = ({ route }: any) => {
         isPublic: params.isPublic,
         isCompleted: params.isCompleted,
         owner: userId
+    }
+
+    const updateHandler = async (task: ITask) => {
+        try {
+            const { data } = await APIServices.update(`/task/${task._id}`, task, {
+                headers: {
+                    authorization: `Bearer ${token}`,
+                }
+            })
+            console.log(data)
+        } catch (error) {
+            console.log(error)
+        }
     }
     
 
