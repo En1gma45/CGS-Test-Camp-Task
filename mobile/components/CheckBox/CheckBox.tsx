@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Pressable, View, Text } from "react-native";
+import { Pressable, View, Text } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 interface CheckBoxProps {
@@ -22,7 +22,5 @@ const CheckBox = ( props: CheckBoxProps ) => {
         </View>
     );
 };
-
-const styles = StyleSheet.create({});
 
 export default CheckBox;
