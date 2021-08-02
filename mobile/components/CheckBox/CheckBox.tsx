@@ -1,18 +1,17 @@
-import React from 'react';
-import { StyleSheet, Pressable, View, Text } from 'react-native';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-
+import React from "react";
+import { StyleSheet, Pressable, View, Text } from "react-native";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 interface CheckBoxProps {
-    isChecked: boolean,
-    style: object
-    value: string
-    onPress: () => void
+    isChecked: boolean;
+    style: object;
+    value: string;
+    onPress: () => void;
 }
 
 const CheckBox = ( props: CheckBoxProps ) => {
-    const {onPress, isChecked} = props
-    const name = isChecked ? 'checkbox-marked-outline' : 'checkbox-blank-outline'
+    const {onPress, isChecked} = props;
+    const name = isChecked ? "checkbox-marked-outline" : "checkbox-blank-outline";
 
     return (
         <View>
@@ -22,8 +21,8 @@ const CheckBox = ( props: CheckBoxProps ) => {
             <Text style={props.style}>{props.value}</Text>
         </View>
     );
-}
+};
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({});
 
 export default CheckBox;

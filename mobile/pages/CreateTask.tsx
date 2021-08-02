@@ -1,53 +1,47 @@
-import React, { useContext } from 'react';
-import { Formik } from 'formik';
-import { TaskValidation } from '../validators/task.validator';
-import { View, StyleSheet, Button, GestureResponderEvent } from 'react-native';
-import { useMutation } from 'react-query';
-import { ITask } from '../types/Post';
-import CheckBox from '../components/CheckBox/CheckBox';
-import InputField from '../components/FormInput/InputField';
-import APIServices from '../services/HTTP.services'
-import { useNavigation } from '@react-navigation/native';
-import { AuthContext } from '../context/AuthContext';
-
+import React, { useContext } from "react";
+import { Formik } from "formik";
+import { TaskValidation } from "../validators/task.validator";
+import { View, StyleSheet, Button, GestureResponderEvent } from "react-native";
+import { useMutation } from "react-query";
+import { ITask } from "../types/Post";
+import CheckBox from "../components/CheckBox/CheckBox";
+import InputField from "../components/FormInput/InputField";
+import APIServices from "../services/HTTP.services";
+import { useNavigation } from "@react-navigation/native";
+import { AuthContext } from "../context/AuthContext";
 
 const CreateTask: React.FC = () => {
+    const { userData } = useContext(AuthContext);
+    const { token, userId } = userData!;
+    console.log(userId);
 
-    const { userData } = useContext(AuthContext)
-    const { token, userId } = userData!
-    console.log(userId)
-    
-    const navigation = useNavigation()
+    const navigation = useNavigation();
     const initVal: ITask = {
-        _id: '',
-        title: '',
-        description: '',
+        _id: "",
+        title: "",
+        description: "",
         year: new Date(Date.now()).getFullYear(),
         isPublic: false,
         isCompleted: false,
         owner: userId
-    }
+    };
 
     const createHandler = async (task: ITask) => {
         try {
-            const {data} = await APIServices.post('/task/', task, {
-                headers: {
-                    authorization: `Bearer ${token}`,
-                }
-            })
-            console.log(data)
-            
-        } catch (error) {
-            console.log(error)
-        }
-    }
+            const {data} = await APIServices.post("/task/", task, token);
+            console.log(data);
 
-    const { mutateAsync } = useMutation(createHandler)
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const { mutateAsync } = useMutation(createHandler);
 
     const submitHandler = async (data: ITask) => {
-        await mutateAsync(data)
-        navigation.navigate('Tasks')
-    }
+        await mutateAsync(data);
+        navigation.navigate("Tasks");
+    };
 
     return (
         <Formik
@@ -59,19 +53,19 @@ const CreateTask: React.FC = () => {
                 return (
                     <View>
                         <InputField
-                            name='title'
+                            name="title"
                             style={styles.input}
                             handleChange={handleChange}
                             handleBlur={handleBlur}
                             value={values.title} />
                         <InputField
-                            name='description'
+                            name="description"
                             style={styles.input}
                             handleChange={handleChange}
                             handleBlur={handleBlur}
                             value={values.description} />
                         <InputField
-                            name='year'
+                            name="year"
                             style={styles.input}
                             handleChange={handleChange}
                             handleBlur={handleBlur}
@@ -79,27 +73,27 @@ const CreateTask: React.FC = () => {
                         <View style={styles.checkbox}>
                             <CheckBox
                                 isChecked={values.isPublic}
-                                onPress={() => setFieldValue('isPublic', !values.isPublic)}
+                                onPress={() => setFieldValue("isPublic", !values.isPublic)}
                                 style={styles.checkbox}
-                                value={values.isPublic ? 'Public' : 'Private'} />
+                                value={values.isPublic ? "Public" : "Private"} />
                         </View>
                         <CheckBox
                             isChecked={values.isCompleted}
-                            onPress={() => setFieldValue('isCompleted', !values.isCompleted)}
+                            onPress={() => setFieldValue("isCompleted", !values.isCompleted)}
                             style={styles.checkbox}
-                            value={values.isCompleted ? 'Completed' : 'Not completed'} />
+                            value={values.isCompleted ? "Completed" : "Not completed"} />
                         <Button
                             onPress={(handleSubmit as unknown) as (event: GestureResponderEvent) => void}
                             title="Submit" />
                         <Button
-                            title='Back to tasks'
-                            onPress={onTasksScreenNavigate => navigation.navigate('Tasks')} />
+                            title="Back to tasks"
+                            onPress={onTasksScreenNavigate => navigation.navigate("Tasks")} />
                     </View>
                 );
             }}
         </Formik>
     );
-}
+};
 
 const styles = StyleSheet.create({
     input: {
@@ -115,10 +109,10 @@ const styles = StyleSheet.create({
         borderWidth: 1,
     },
     checkbox: {
-        display: 'flex',
-        flexDirection: 'row',
+        display: "flex",
+        flexDirection: "row",
         marginBottom: 15
     }
-})
+});
 
 export default CreateTask;

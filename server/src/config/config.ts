@@ -1,13 +1,11 @@
-import dotenv from 'dotenv'
+import dotenv from "dotenv";
 
-
-dotenv.config()
-
-const SERVER_HOSTNAME = process.env.SERVER_HOSTNAME || 'localhost'
-const SERVER_PORT = process.env.SERVER_PORT || 5000
-const SERVER_TOKEN_EXPIRETIME = process.env.SERVER_TOKEN_EXPIRETIME || 3600
-const SERVER_TOKEN_ISSUER = process.env.SERVER_TOKEN_ISSUER || 'Issuer'
-const SERVER_TOKEN_SECRET = process.env.SERVER_TOKEN_SECRET || 'SECRET'
+dotenv.config();
+const SERVER_HOSTNAME = process.env.SERVER_HOSTNAME || "localhost";
+const SERVER_PORT = process.env.SERVER_PORT || 5000;
+const SERVER_TOKEN_EXPIRETIME = process.env.SERVER_TOKEN_EXPIRETIME || 3600;
+const SERVER_TOKEN_ISSUER = process.env.SERVER_TOKEN_ISSUER || "Issuer";
+const SERVER_TOKEN_SECRET = process.env.SERVER_TOKEN_SECRET || "SECRET";
 
 const SERVER = {
     hostname: SERVER_HOSTNAME,
@@ -17,10 +15,10 @@ const SERVER = {
         issuer: SERVER_TOKEN_ISSUER,
         secret: SERVER_TOKEN_SECRET
     }
-}
+};
 
 const config = {
     server: SERVER
-}
+};
 
-export default config
+export default config;

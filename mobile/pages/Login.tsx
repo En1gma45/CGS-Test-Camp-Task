@@ -1,40 +1,43 @@
-import React, { useContext } from 'react';
-import { View, StyleSheet, Button, GestureResponderEvent } from 'react-native';
-import { Formik } from 'formik';
-import { UserValidation } from '../validators/user.validator'
-import { ILogin } from '../types/Login';
-import InputField from '../components/FormInput/InputField';
-import APIServices from '../services/HTTP.services'
-import { useMutation } from 'react-query';
-import { AuthContext } from '../context/AuthContext';
-
+import React, { useContext } from "react";
+import { View, StyleSheet, Button, GestureResponderEvent } from "react-native";
+import { Formik } from "formik";
+import { UserValidation } from "../validators/user.validator";
+import { ILogin } from "../types/Login";
+import InputField from "../components/FormInput/InputField";
+import APIServices from "../services/HTTP.services";
+import { useMutation } from "react-query";
+import { AuthContext } from "../context/AuthContext";
 
 const Login: React.FC = ({ navigation }: any) => {
     const initVal: ILogin = {
-        email: '',
-        password: ''
-    }
+        email: "",
+        password: ""
+    };
     const { login } = useContext(AuthContext);
 
     const loginHandler = async (data: ILogin) => {
         try {
-            const response = await APIServices.post('/user/login', data)
-            login(response.data.token, response.data.userId)
+            const response = await APIServices.post("/user/login", data);
+            login(response.data.token, response.data.userId);
         } catch (error) {
-            throw new Error(`Smth went wrong: ${error}`)
+            throw new Error(`Smth went wrong: ${error}`);
         }
-    }
+    };
 
-    const { mutateAsync } = useMutation(loginHandler)
+    const { mutateAsync } = useMutation(loginHandler);
 
     const submitHandler = async (data: ILogin) => {
-        try{
-            await mutateAsync(data)
-            navigation.navigate('Tasks')
-        }catch(e){
-            throw new Error(`${e}`)
+        try {
+            await mutateAsync(data);
+            navigation.navigate("Tasks");
+        } catch (e) {
+            throw new Error(`${e}`);
         }
-    }
+    };
+
+    const redirectTo = (screenName: string, props?: object) => () => {
+        navigation.navigate(screenName, props);
+    };
 
     return (
         <Formik
@@ -45,14 +48,14 @@ const Login: React.FC = ({ navigation }: any) => {
             {({ handleChange, handleBlur, handleSubmit, values }) => (
                 <View style={styles.container}>
                     <InputField
-                            name='email'
+                            name="email"
                             style={styles.input}
                             handleChange={handleChange}
                             handleBlur={handleBlur}
                             value={values.email}
                     />
                     <InputField
-                            name='password'
+                            name="password"
                             style={styles.input}
                             handleChange={handleChange}
                             handleBlur={handleBlur}
@@ -60,17 +63,17 @@ const Login: React.FC = ({ navigation }: any) => {
                     />
                     <Button
                         onPress={(handleSubmit as unknown) as (event: GestureResponderEvent) => void}
-                        title="Login" 
+                        title="Login"
                     />
-                    <Button 
-                        title='Create new account'
-                        onPress={onMainScreenNavigate => navigation.navigate('Registration')}
+                    <Button
+                        title="Create new account"
+                        onPress={redirectTo("Registration")}
                     />
                 </View>
             )}
         </Formik>
     );
-}
+};
 
 const styles = StyleSheet.create({
     container: {
@@ -82,8 +85,6 @@ const styles = StyleSheet.create({
         marginBottom: 25,
         borderWidth: 1,
       },
-})
+});
 
 export default Login;
-
-

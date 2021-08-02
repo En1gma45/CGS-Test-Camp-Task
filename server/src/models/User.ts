@@ -11,8 +11,8 @@ export interface IUser extends Document {
   password: string;
   tasks: [{
     type: Types.ObjectId,
-    ref: 'Task'
-  }]
+    ref: "Task"
+  }];
 }
 
 const userSchema: Schema = new Schema({
@@ -27,7 +27,7 @@ const userSchema: Schema = new Schema({
   },
   tasks: [{
     type: Types.ObjectId,
-    ref: 'Task'
+    ref: "Task"
   }],
   date: {
     type: Date,

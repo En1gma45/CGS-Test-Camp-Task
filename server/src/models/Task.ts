@@ -1,5 +1,4 @@
-import { Schema, model, Model, Document, Types } from 'mongoose';
-
+import { Schema, model, Model, Document, Types } from "mongoose";
 
 /**
  * Interface to model the Profile Schema for TypeScript.
@@ -15,15 +14,15 @@ export interface ITask extends Document {
     title: string;
     description: string;
     year: number;
-    isPublic:boolean;
-    isCompleted:boolean;
-    owner: Types.ObjectId
+    isPublic: boolean;
+    isCompleted: boolean;
+    owner: Types.ObjectId;
 }
 
 const TaskSchema: Schema = new Schema({
     title: {
         type: String,
-        required: true 
+        required: true
     },
     description: {
         type: String,
@@ -43,10 +42,10 @@ const TaskSchema: Schema = new Schema({
     },
     owner: {
         type: Types.ObjectId,
-        ref: 'User'
+        ref: "User"
     }
-    
-})
+
+});
 
 const Task: Model<ITask> = model("Task", TaskSchema);
 
