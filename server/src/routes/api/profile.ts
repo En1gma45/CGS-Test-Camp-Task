@@ -1,7 +1,6 @@
 import { Router, Response } from "express";
 import { check, validationResult } from "express-validator/check";
 import HttpStatusCodes from "http-status-codes";
-
 import Profile, { IProfile } from "../../models/Profile";
 import Request from "../../types/Request";
 import User, { IUser } from "../../models/User";
@@ -62,7 +61,7 @@ router.post(
     };
 
     try {
-      let user: IUser = await User.findOne({ _id: req.userId });
+      const user: IUser = await User.findOne({ _id: req.userId });
 
       if (!user) {
         return res.status(HttpStatusCodes.BAD_REQUEST).json({
