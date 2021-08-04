@@ -9,7 +9,6 @@ import APIServices from "../services/HTTP.services";
 const registrationHandler = async (data: IRegister) => {
     try {
         const response = await APIServices.post("/user/registration", data);
-        console.log(response.data);
     } catch (error) {
         throw new Error(`Smth went wrong: ${error}`);
     }

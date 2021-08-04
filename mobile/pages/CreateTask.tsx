@@ -13,7 +13,6 @@ import { AuthContext } from "../context/AuthContext";
 const CreateTask: React.FC = () => {
     const { userData } = useContext(AuthContext);
     const { token, userId } = userData!;
-    console.log(userId);
 
     const navigation = useNavigation();
     const initVal: ITask = {
@@ -30,8 +29,8 @@ const CreateTask: React.FC = () => {
         try {
             const {data} = await APIServices.post("/task/", task, token);
             console.log(data);
-
         } catch (error) {
+            // tslint:disable-next-line: no-console
             console.log(error);
         }
     };

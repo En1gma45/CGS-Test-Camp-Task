@@ -3,13 +3,16 @@ import HttpStatusCodes from "http-status-codes";
 import { validationResult } from "express-validator/check";
 import Task, { ITask } from "../models/Task";
 import Request from "../types/Request";
+import { IParams } from "Params";
+import { FilterQuery } from "mongoose";
 
 class TaskController {
     // fetch all tasks
     async find(req: Request, res: Response) {
         try {
 
-            let { page, size } = req.query;
+            // tslint:disable-next-line: prefer-const
+            let { page, size, title, isPublic, isCompleted } = req.query;
             if (!page) {
                 page = "1";
             }
@@ -17,12 +20,23 @@ class TaskController {
                 size = "5";
             }
 
+            // tslint:disable-next-line: prefer-const
+            // @ts-ignore
+            const params: IParams = {};
+
+            if (title) params.title = title as string;
+            if (isPublic === "false" || isPublic === "true") params.isPublic = isPublic as string;
+            if (isCompleted === "false" || isCompleted === "true") params.isCompleted = isCompleted as string;
+
             const limit = parseInt(size as string);
             const skip = (parseInt(page as string) - 1) * parseInt(size as string);
 
+            console.log(params);
+
 
             const userId = res.locals.userId;
-            const tasks: Array<ITask> = await Task.find({ owner: userId}).limit(limit).skip(skip);
+            const rangeOfTasks = await Task.count({ owner: userId });
+            const tasks: Array<ITask> = await Task.find({ owner: userId}).find({...params! as FilterQuery<ITask>}).limit(limit).skip(skip);
             if (!tasks) {
                 return res.status(HttpStatusCodes.BAD_REQUEST).json({
                     errors: [
@@ -31,8 +45,11 @@ class TaskController {
                         },
                     ],
                 });
+
             }
             res.json({
+                query: req.query,
+                countsOfPages: Math.ceil(rangeOfTasks / parseInt(size as string)),
                 page,
                 size,
                 tasks

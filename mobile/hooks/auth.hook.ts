@@ -51,6 +51,15 @@ export const useAuth = () => {
         }
     };
 
+    useEffect(() => {
+        if (userData && userData.token) {
+            login(userData.token, userData.userId);
+        }
+        else {
+            logout();
+        }
+    }, []);
+
     return { login, logout, userData };
 };
 
