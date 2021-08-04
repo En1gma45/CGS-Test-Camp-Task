@@ -1,4 +1,4 @@
-import React, { useCallback, useContext } from "react";
+import React, { useCallback, useContext, useState } from "react";
 import { View, StyleSheet, Button, SafeAreaView, Text, FlatList, ListRenderItem, ActivityIndicator } from "react-native";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { ITask } from "../types/Post";
@@ -7,31 +7,37 @@ import APIServices from "../services/HTTP.services";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { AuthContext } from "../context/AuthContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import PaginationButtons from "./PaginationButtons/PaginationButtons";
+import Search from "./Search/Search";
 
 const TasksContainer = () => {
 
     const navigation = useNavigation();
     const queryClient = useQueryClient();
     const { userData } = useContext(AuthContext);
-    const { token, userId } = userData!;
+    const { token } = userData!;
+    const [page, setPage] = useState<number>(1);
+    const [params, setParams] = useState<string>("");
+    const [tokenState, setTokenState] = useState({value: ""});
 
-    const getHandler = useCallback(async () => {
+
+    const getHandler = useCallback(async (queryString) => {
         try {
-            // AsyncStorage.getItem('UserData').then(res => console.log(res))
-            const { data } = await APIServices.get("/task", token);
-            console.log(data);
+            console.log("Params: ", params);
+            const { data } = await APIServices.get("/task".concat("?", queryString), token);
+            setPage(data.page);
             return data;
         } catch (e) {
             throw new Error(`Smth went wrong: ${e}`);
         }
-    }, [token]);
+    }, [params]);
 
-    const deleteHandler = async ( id: string ) => {
+    const deleteHandler = async (id: string) => {
         try {
             const response = await APIServices.delete(`/task/${id}`, token);
-            console.log(response.data);
-            getHandler();
+            getHandler(params);
         } catch (error) {
+            // tslint:disable-next-line: no-console
             console.log(error);
         }
     };
@@ -41,7 +47,7 @@ const TasksContainer = () => {
     };
 
 
-    const { data, isLoading, isError } = useQuery<any>("getTasks", getHandler);
+    const { data, isLoading, isError } = useQuery(["getTasks", params], () => getHandler(params));
     const { mutateAsync } = useMutation(deleteHandler);
 
     const removeHandler = (id: string) => async () => {
@@ -52,13 +58,13 @@ const TasksContainer = () => {
     useFocusEffect(
         useCallback(() => {
             queryClient.invalidateQueries("getTasks");
-        }, [])
+        }, [params])
     );
 
     if (isLoading) {
         return (
             <View>
-                <ActivityIndicator />
+                <ActivityIndicator size="large" />
             </View>
         );
     }
@@ -72,36 +78,42 @@ const TasksContainer = () => {
     }
 
     const renderItems: ListRenderItem<ITask> = ({ item }) => {
-        return(
+        return (
             <View>
-                <TaskItem {...item}/>
+                <TaskItem {...item} />
                 <View style={styles.buttonContainer}>
                     <Button
                         title="Edit"
-                        onPress={redirectTo("Edit", {...item})} />
+                        onPress={redirectTo("Edit", { ...item })} />
                     <Button
                         title="Delete"
                         onPress={removeHandler(item._id)} />
-                    </View>
+                </View>
             </View>
         );
     };
 
     const listFooter = () => {
         return (
-            <Button
-                title="Main"
-                onPress={redirectTo("Main")}
-            />
+            <View>
+                {data.countsOfPages > 1 && <PaginationButtons count={data.countsOfPages} handler={setPage} />}
+                <Button
+                    title="Main"
+                    onPress={redirectTo("Main")}
+                />
+            </View>
         );
     };
 
     const listHeader = () => {
         return (
-            <View style={ styles.createButton }>
-                <Button
-                    title="Create"
-                    onPress={redirectTo("Create")}/>
+            <View style={styles.header}>
+                <View style={styles.createButton}>
+                    <Button
+                        title="Create"
+                        onPress={redirectTo("Create")} />
+                </View>
+                <Search page={page} setParams={setParams}/>
             </View>
         );
     };
@@ -114,13 +126,16 @@ const TasksContainer = () => {
                 keyExtractor={item => item._id}
                 ListFooterComponent={listFooter}
                 ListHeaderComponent={listHeader}
-                stickyHeaderIndices={[0]}
+
             />
         </SafeAreaView>
     );
 };
 
 const styles = StyleSheet.create({
+    header: {
+        height: 450
+    },
     buttonContainer: {
         justifyContent: "center",
         padding: 25,

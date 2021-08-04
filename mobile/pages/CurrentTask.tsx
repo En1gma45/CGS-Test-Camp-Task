@@ -28,8 +28,8 @@ const CurrentTask = ({ route }: any) => {
     const updateHandler = async (task: ITask) => {
         try {
             const { data } = await APIServices.update(`/task/${task._id}`, task, token);
-            console.log(data);
         } catch (error) {
+            // tslint:disable-next-line: no-console
             console.log(error);
         }
     };
