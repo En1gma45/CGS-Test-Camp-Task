@@ -18,13 +18,14 @@ const TasksContainer = () => {
     const { token } = userData!;
     const [page, setPage] = useState<number>(1);
     const [params, setParams] = useState<string>("");
-    const [tokenState, setTokenState] = useState({value: ""});
+    const [tokenState, setTokenState] = useState({ value: "" });
 
 
     const getHandler = useCallback(async (queryString) => {
         try {
+            // tslint:disable-next-line: no-console
             console.log("Params: ", params);
-            const { data } = await APIServices.get("/task".concat("?", queryString), token);
+            const { data } = await APIServices.get("/task".concat(queryString), token);
             setPage(data.page);
             return data;
         } catch (e) {

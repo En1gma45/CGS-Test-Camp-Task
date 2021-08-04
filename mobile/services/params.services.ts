@@ -1,43 +1,45 @@
-import { IParams } from "./../types/IParams";
 
-export const urlHandler = (params: IParams) => {
+abstract class ApiParam<V> {
+  constructor(private name: string, protected value: V) { }
 
-  let paramsString: Array<string> = [];
-
-  for (const [key, value] of Object.entries(params)) {
-    if (key === "page") {
-      paramsString.push(`${key}=${value}`);
-    } else if (key === "reset" && value === true) {
-      paramsString = [];
-      break;
-    } else if (key === "reset" && value === false) {
-      paramsString.push();
-    } else if (key === "title" && value === "") {
-      paramsString.push();
-    } else if (key === "isPrivate" && value === true) {
-      paramsString.push(`isPublic=${!value}`);
-    } else if (key === "isPublic" && value === true && !paramsString.includes("isPublic=false")) {
-      paramsString.push(`${key}=${value}`);
-    } else if (key === "isNotCompleted" && value === true) {
-      paramsString.push(`isCompleted=${!value}`);
-    } else if (key === "isCompleted" && value === true && !paramsString.includes("isCompleted=false")) {
-      paramsString.push(`${key}=${value}`);
-    }
+  public getParam() {
+    // tslint:disable-next-line: no-null-keyword
+    return this.nothingCondition() ? `${this.name}=${this.value}` : "";
   }
 
-  return paramsString.join("&");
+  public setValue(value: V): void {
+    this.value = value;
+  }
+
+  abstract nothingCondition(): boolean;
+}
+
+export class PageParam extends ApiParam<number> {
+  nothingCondition(): boolean {
+    return this.value > 0;
+  }
+}
+
+export class TitleParam extends ApiParam<string> {
+  nothingCondition(): boolean {
+    return this.value !== "";
+  }
+}
+
+export class IsPublicParam extends ApiParam<boolean> {
+  nothingCondition(): boolean {
+    return this.value === true || true;
+  }
+}
+
+export class IsCompletedParam extends ApiParam<boolean> {
+  nothingCondition(): boolean {
+    return this.value === true || true;
+  }
+}
+
+export const urlHandler = (params: ApiParam<any>[]) => {
+  const serializedParams = params.map((p) => p.getParam());
+  const filteredParams = serializedParams.filter(item => item !== "");
+  return `?${filteredParams.join("&")}`;
 };
-
-/*
-
-*/
-
-/*
-  page: number;
-  title: string;
-  reset: boolean;
-  isPublic: boolean;
-  isPrivate: boolean;
-  isCompleted: boolean;
-  isNotCompleted: boolean;
-*/

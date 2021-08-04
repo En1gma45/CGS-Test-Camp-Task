@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { View, StyleSheet, Button, TextInput } from "react-native";
-import { urlHandler } from "../../services/params.services";
+import { PageParam, TitleParam, IsPublicParam, IsCompletedParam, urlHandler } from "../../services/params.services";
 import { IParams } from "../../types/IParams";
 import CheckBox from "../CheckBox/CheckBox";
 
@@ -9,8 +9,7 @@ interface IProps {
     setParams: (data: string) => void;
 }
 
-const Search = ({ page, setParams }: IProps ) => {
-
+const Search = ({ page, setParams }: IProps) => {
 
     const [check, setCheck] = useState<IParams>({
         page: page,
@@ -22,10 +21,17 @@ const Search = ({ page, setParams }: IProps ) => {
         isNotCompleted: false
     });
 
-
     const onPressHandler = () => {
-        const temp = urlHandler(check);
-        setParams(temp);
+        if (check.reset) {
+            setParams(urlHandler([]));
+        } else {
+            const page = new PageParam("page", check.page);
+            const title = new TitleParam("title", check.title);
+            const isPublic = new IsPublicParam("isPublic", check.isPublic);
+            const isCompleted = new IsCompletedParam("isCompleted", check.isCompleted);
+            setParams(urlHandler([page, title, isPublic, isCompleted]));
+        }
+
     };
 
     const titleState = (val: string) => {
@@ -88,7 +94,7 @@ const Search = ({ page, setParams }: IProps ) => {
             <TextInput
                 placeholder="Search..."
                     style={styles.input}
-                    onChangeText={(text) => titleState(text)}
+                    onChangeText={titleState}
                     value={check.title}
                 />
             <View>
